@@ -1,8 +1,5 @@
 package com.boolsazo.bankchall.repository;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import com.boolsazo.bankchall.domain.Account;
 import com.boolsazo.bankchall.domain.Survey;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,8 +12,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class SurveyRepositoryTest {
+
     @Autowired
     private SurveyRepository repository;
+
     @Test
     public void unit() throws Exception {
         Survey survey = new Survey(1, 350, 50, "학생", 50, 40, false);
