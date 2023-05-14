@@ -24,7 +24,7 @@ class SurveyServiceImplTest {
     private SurveyServiceImpl service;
 
     @Test
-    void showSurvey() {
+    void showSurvey() throws Exception {
         //given
         final int userId = 1;
         given(repository.findById(any())).willReturn(
@@ -38,7 +38,7 @@ class SurveyServiceImplTest {
     }
 
     @Test
-    public void whenExceptionThrown_thenAssertionSucceeds() {
+    public void whenExceptionThrown_thenAssertionSucceeds()  {
         Exception exception = assertThrows(NoSuchElementException.class, () -> {
             service.showSurvey(0);
         });

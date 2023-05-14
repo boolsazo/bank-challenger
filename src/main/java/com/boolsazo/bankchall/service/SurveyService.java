@@ -4,7 +4,7 @@ import com.boolsazo.bankchall.domain.Survey;
 
 public interface SurveyService {
 
-    void registerSurvey(Survey vo);
+    void registerSurvey(Survey vo) throws Exception;
 
-    Survey showSurvey(int userId);
+    Survey showSurvey(int userId) throws Exception;
 }
