@@ -44,6 +44,7 @@ public class BFRServiceImpl implements BFRService {
     @Override
     public void registerBFR(BFRTestForm vo) throws Exception {
         int userId = vo.getUserId();
+        BFR bfr = createBFR(vo);
 
         // TODO: userRepository에 BFR 등록하기
 
