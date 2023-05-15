@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 public class AccountServiceImpl implements AccountService {
 
     @Autowired
-    AccountRepository accountRepository;
+    private AccountRepository accountRepository;
 
     @Override
     public void registWithdrawAccount(RegistAccountRequest request) {

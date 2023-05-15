@@ -39,18 +39,14 @@ public class OpenBankAPIController {
             if (!UserOauthOptional.isPresent()) {
                 // 토큰 발급 api
                 ResponseTokenDto token = openBankClient.requestToken(userId, code);
-                System.out.println(token);
                 // 2.access_token, seq 저장
                 UserOauth vo = new UserOauth(userId, token.getUser_seq_no(),
                     token.getAccess_token());
-                System.out.println("OpenBankAPIController.registerAccessToken");
-                System.out.println("vo = " + vo);
                 userOauth = userOauthService.registerUserOauth(vo);
-                System.out.println("userOauth = " + userOauth);
-
             } else {
                 userOauth = UserOauthOptional.get();
             }
+
             // 사용자 조회 api
             UserAccountListResponseDto userAccountListResponse = openBankClient.requestUserList(
                 userOauth.getUserSeqNo(),
@@ -66,19 +62,18 @@ public class OpenBankAPIController {
                     userId,
                     accountDto.getFintech_use_num());
 
-            accountService.registSavingAccount(request);
+            if (type == 0) {
+                accountService.registWithdrawAccount(request);
+            } else {
+                accountService.registSavingAccount(request);
+            }
+
             return ResponseEntity.status(HttpStatus.CREATED)
-                .body("Withdraw account created successfully.");
+                .body("account created successfully.");
         } catch (Exception e) {
             System.out.println(e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body("Failed to register AccessToken.");
         }
     }
-
-//    public ResponseEntity
-    // 1. userId 받아서
-    // 2. DB Bearer Token 헤더에 놓고
-    // exchange
-
 }
