@@ -1,11 +1,15 @@
 package com.boolsazo.bankchall.domain;
 
 import com.boolsazo.bankchall.common.BaseTimeEntity;
-import java.sql.Timestamp;
+
+import java.time.LocalDateTime;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +19,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@Table(name = "goal")
 public class Goal extends BaseTimeEntity {
 
     @Id
@@ -25,6 +31,7 @@ public class Goal extends BaseTimeEntity {
     @Column(name = "user_id", nullable = false)
     private int userId;
 
+    @Column
     private String category;
 
     @Column(name = "goal_name", nullable = false)
@@ -45,7 +52,13 @@ public class Goal extends BaseTimeEntity {
     @Column(columnDefinition = "BOOLEAN DEFAULT 0", nullable = false)
     private boolean isExpired;
 
+    @Column
     private String day;
 
-    private Timestamp savingStartDate;
+    @Column(columnDefinition = "TIMESTAMP")
+    private LocalDateTime savingStartDate;
+
+    @Column(columnDefinition = "TIMESTAMP")
+    private LocalDateTime createDate;
+
 }

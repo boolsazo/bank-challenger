@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+
 @Entity
 @Table(name = "user")
 @Getter
@@ -31,7 +32,7 @@ public class User {
     private String birthYear;
     @Column(nullable = false)
     private String age;
-    @Column(name="profile_image", nullable = false)
+    @Column(name="profile_image")
     private String profileImage;
 
     @Column(name="financial_type")
@@ -44,23 +45,22 @@ public class User {
         this.userId = userId;
     }
 
-    public User(String id) {
+    public User(String id, String name, String email, String gender, String birthYear, String age,
+                String profileImage, String financialType) {
         this.id = id;
-    }
-
-    public User(String name, String email, String gender, String birthYear, String age,
-        String profileImage) {
         this.name = name;
         this.email = email;
         this.gender = gender;
         this.birthYear = birthYear;
         this.age = age;
         this.profileImage = profileImage;
+        this.financialType = financialType;
     }
 
-    public User(int userId, String name, String email, String gender, String birthYear, String age,
-        String profileImage, String financialType) {
+    public User(int userId, String id, String name, String email, String gender, String birthYear, String age,
+            String profileImage, String financialType) {
         this.userId = userId;
+        this.id = id;
         this.name = name;
         this.email = email;
         this.gender = gender;
