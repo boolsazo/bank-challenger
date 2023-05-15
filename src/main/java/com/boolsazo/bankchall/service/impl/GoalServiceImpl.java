@@ -4,15 +4,22 @@ import com.boolsazo.bankchall.domain.Goal;
 import com.boolsazo.bankchall.dto.GoalListResponse;
 import com.boolsazo.bankchall.repository.GoalRepository;
 import com.boolsazo.bankchall.service.GoalService;
+
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
 public class GoalServiceImpl implements GoalService {
 
     @Autowired
     private GoalRepository goalRepository;
+
+    @Autowired
+    private GoalService goalService;
 
     @Autowired
     public GoalServiceImpl(GoalRepository goalRepository) {
@@ -35,9 +42,9 @@ public class GoalServiceImpl implements GoalService {
         goalRepository.save(vo);
     }
 
-    @Override
-    public Goal showGoal(int goalId) {
-        return null;
+    @GetMapping("/detail/{goalId}")
+    public Goal showGoal(@PathVariable("goalId") int goalId) {
+        return goalService.showGoal(goalId);
     }
 
     //    @Override
@@ -47,7 +54,6 @@ public class GoalServiceImpl implements GoalService {
 //        int count = 3;
 //        return (GoalListResponse) goalRepository.findAll();
 //    }
-
     @Override
     public GoalListResponse showAllGoal(int userId) {
         List<Goal> goals = goalRepository.findByUserId(userId);
