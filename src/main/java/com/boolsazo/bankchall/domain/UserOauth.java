@@ -19,7 +19,6 @@ import lombok.NoArgsConstructor;
 @Table(name = "user_oauth")
 public class UserOauth {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", nullable = false)
     private int userId;
 

@@ -3,21 +3,25 @@ package com.boolsazo.bankchall.service.impl;
 import com.boolsazo.bankchall.domain.UserOauth;
 import com.boolsazo.bankchall.repository.UserOauthRepository;
 import com.boolsazo.bankchall.service.UserOauthService;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
-@Repository
+@Service
 public class UserOauthServiceImpl implements UserOauthService {
 
     @Autowired
     private UserOauthRepository repository;
     @Override
-    public void registerUserOauth(UserOauth vo) throws Exception {
-        repository.save(vo);
+    public UserOauth registerUserOauth(UserOauth vo) throws Exception {
+        System.out.println("UserOauthServiceImpl.registerUserOauth");
+        System.out.println("vo = " + vo);
+        return repository.save(vo);
     }
 
     @Override
-    public UserOauth showUserOauth(int userId) throws Exception {
+    public Optional<UserOauth> findByUserId(int userId) throws Exception {
         return repository.findByUserId(userId);
     }
 

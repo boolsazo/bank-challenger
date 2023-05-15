@@ -20,7 +20,7 @@ public class WithdrawAccountServiceImpl implements WithdrawAccountService {
     public void registerAccount(WithdrawRegisterRequest request) {
         // 재윤 코드
         // 계좌 정보 조회 api 호출
-        accountRepository.save(request.toEntity());
+      //  accountRepository.save(request.toEntity());
     }
 
     @Override

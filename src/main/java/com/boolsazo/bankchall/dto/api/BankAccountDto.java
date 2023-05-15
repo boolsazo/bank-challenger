@@ -1,10 +1,9 @@
 package com.boolsazo.bankchall.dto.api;
 
-import java.util.List;
 import lombok.Data;
 
 @Data
-public class AccountDto {
+public class BankAccountDto {
     private String fintech_use_num;
     private String account_alias;
     private String bank_code_std;

@@ -1,6 +1,5 @@
 package com.boolsazo.bankchall.dto.api;
 
-import com.boolsazo.bankchall.dto.api.AccountDto;
 import java.util.List;
 import lombok.Data;
 
@@ -14,5 +13,5 @@ public class UserAccountListResponseDto {
     private String user_ci;
     private String user_name;
     private String res_cnt;
-    private List<AccountDto> res_list;
+    private List<BankAccountDto> res_list;
 }
