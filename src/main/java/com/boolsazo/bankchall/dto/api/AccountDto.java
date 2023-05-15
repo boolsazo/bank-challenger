@@ -1,4 +1,4 @@
-package com.boolsazo.bankchall.dto;
+package com.boolsazo.bankchall.dto.api;
 
 import java.util.List;
 import lombok.Data;

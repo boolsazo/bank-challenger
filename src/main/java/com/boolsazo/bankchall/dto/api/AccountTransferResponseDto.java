@@ -1,4 +1,4 @@
-package com.boolsazo.bankchall.dto;
+package com.boolsazo.bankchall.dto.api;
 
 public class AccountTransferResponseDto {
 
