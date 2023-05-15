@@ -1,10 +1,10 @@
 package com.boolsazo.bankchall.service.impl;
 
 import com.boolsazo.bankchall.domain.Goal;
+import com.boolsazo.bankchall.dto.GoalListResponse;
 import com.boolsazo.bankchall.repository.GoalRepository;
 import com.boolsazo.bankchall.service.GoalService;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,15 +37,28 @@ public class GoalServiceImpl implements GoalService {
 
     @Override
     public Goal showGoal(int goalId) {
-        Optional<Goal> optionalGoal = goalRepository.findById(goalId);
-        // Goal 객체가 존재하지 않는 경우에 대한 처리를 추가합니다.
-        return optionalGoal.orElseThrow(
-            () -> new IllegalArgumentException("Invalid goal Id:" + goalId));
+        return null;
     }
+
+    //    @Override
+//    public GoalListResponse showAllGoal(int userId) {
+//        List<Goal> optionalGoal = goalRepository.findAll();
+//        GoalListResponse goalListResponse = new GoalListResponse();
+//        int count = 3;
+//        return (GoalListResponse) goalRepository.findAll();
+//    }
 
     @Override
-    public List<Goal> showAllGoal(int userId) {
+    public GoalListResponse showAllGoal(int userId) {
+        List<Goal> goals = goalRepository.findByUserId(userId);
+        int count = goalRepository.countByUserId(userId);
 
-        return goalRepository.findAll();
+        GoalListResponse goalListResponse = new GoalListResponse();
+        goalListResponse.setGoals(goals);
+        goalListResponse.setCount(count);
+
+        return goalListResponse;
     }
+
+
 }
