@@ -1,14 +1,14 @@
 package com.boolsazo.bankchall.controller;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 public class HelloController {
 
-    @GetMapping("/api/hello")
-    public String hello() {
-        return "ㅗㅑ";
+    @GetMapping(value = {"/main"})
+    public String handleError() {
+        return "forward:/index.html";
     }
 
 }

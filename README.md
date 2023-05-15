@@ -14,7 +14,7 @@ This is ***Bank Challenger*** project.
     > **IntelliJ** : bank-challenger  
     **Visual Studio Code** : bank-challenger/frontend
 4. **IntelliJ**의 터미널을 열어 다음 명령어 실행
-   ```bash
+    ```bash
     ./mvnw clean install
     ```
 5. IntelliJ에서 `BankChallApplication` 실행
