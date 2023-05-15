@@ -11,18 +11,26 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class WithdrawRegisterRequest {
+public class RegistAccountRequest {
 
     private String accountNumMasked;
     private String bankName;
     private boolean isUsed = true;
     private int userId;
 
-    public Account toEntity() {
+    public Account toWithdrawEntity() {
         return new Account(userId,
                 accountNumMasked,
                 bankName,
                 isUsed,
                 0);
+    }
+
+    public Account toSavingsEntity() {
+        return new Account(userId,
+                accountNumMasked,
+                bankName,
+                isUsed,
+                1);
     }
 }

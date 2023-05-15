@@ -1,8 +1,8 @@
 package com.boolsazo.bankchall.controller;
 
 import com.boolsazo.bankchall.dto.AccountResponse;
-import com.boolsazo.bankchall.dto.WithdrawRegisterRequest;
-import com.boolsazo.bankchall.service.WithdrawAccountService;
+import com.boolsazo.bankchall.dto.RegistAccountRequest;
+import com.boolsazo.bankchall.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,17 +14,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController()
+@RestController
 @RequestMapping("/withdraw")
 public class WithdrawAccountController {
 
     @Autowired
-    WithdrawAccountService withdrawAccountService;
+    private AccountService accountService;
 
     @PostMapping
-    public ResponseEntity registerAccount(@RequestBody WithdrawRegisterRequest request) {
+    public ResponseEntity registerAccount(@RequestBody RegistAccountRequest request) {
         try {
-            withdrawAccountService.registerAccount(request);
+            accountService.registWithdrawAccount(request);
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body("Withdraw account created successfully.");
         } catch (Exception e) {
@@ -37,7 +37,7 @@ public class WithdrawAccountController {
     @GetMapping("/list/{userId}")
     public ResponseEntity<?> withdrawList(@PathVariable("userId") int userId) {
         try {
-            AccountResponse response = withdrawAccountService.withdrawList(userId);
+            AccountResponse response = accountService.withdrawList(userId);
             return ResponseEntity.status(HttpStatus.OK)
                     .body(response);
         } catch (Exception e) {
@@ -51,13 +51,13 @@ public class WithdrawAccountController {
     @DeleteMapping("{accountId}")
     public ResponseEntity deleteAccount(@PathVariable("accountId") int accountId) {
         try {
-            withdrawAccountService.deleteAccount(accountId);
+            accountService.deleteAccount(accountId);
             return ResponseEntity.status(HttpStatus.OK)
                     .body("Withdraw account deleted successfully.");
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Failed to delete withdraw account.");
+                    .body(e.getMessage());
         }
     }
 
