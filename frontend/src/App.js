@@ -4,7 +4,6 @@ import './App.css';
 import Hello from './pages/Hello';
 import Survey from './pages/Survey';
 import Main from './pages/Main';
-import Auth from './pages/Auth';
 
 function App() {
     return (
@@ -16,7 +15,6 @@ function App() {
                     <Route path="/main" element={<Main />} />
                 </Routes>
             </div>
-            <Auth/>
         </BrowserRouter>
     );
 }
