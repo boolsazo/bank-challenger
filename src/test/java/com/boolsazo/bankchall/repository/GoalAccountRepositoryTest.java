@@ -34,6 +34,7 @@ class GoalAccountRepositoryTest {
     }
 
     @Test
+    @DisplayName("goal_id 일치하는 GoalAccount(계좌-목표 테이블) 행 삭제하기")
     void deleteByGoalId() {
         goalAccountRepository.deleteByGoalId(1);
     }
