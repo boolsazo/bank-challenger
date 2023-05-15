@@ -1,7 +1,7 @@
 package com.boolsazo.bankchall.controller;
 
-import com.boolsazo.bankchall.dto.AccountResponse;
 import com.boolsazo.bankchall.dto.RegistAccountRequest;
+import com.boolsazo.bankchall.dto.api.AccountResponse;
 import com.boolsazo.bankchall.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,7 +26,7 @@ public class SavingsAccountController {
         try {
             accountService.registSavingAccount(request);
             return ResponseEntity.status(HttpStatus.CREATED)
-                    .body("Withdraw account created successfully.");
+                    .body("Savings account created successfully.");
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -37,14 +37,14 @@ public class SavingsAccountController {
     @GetMapping("/list/{userId}")
     public ResponseEntity<?> withdrawList(@PathVariable("userId") int userId) {
         try {
-            AccountResponse response = accountService.withdrawList(userId);
+            AccountResponse response = accountService.savingsList(userId);
             return ResponseEntity.status(HttpStatus.OK)
                     .body(response);
         } catch (Exception e) {
             System.out.println(e.getMessage());
 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Failed to create withdraw account.");
+                    .body("Failed to create Savings account.");
         }
     }
 
@@ -53,7 +53,7 @@ public class SavingsAccountController {
         try {
             accountService.deleteAccount(accountId);
             return ResponseEntity.status(HttpStatus.OK)
-                    .body("Withdraw account deleted successfully.");
+                    .body("Savings account deleted successfully.");
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

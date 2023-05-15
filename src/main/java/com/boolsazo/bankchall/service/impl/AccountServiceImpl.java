@@ -1,8 +1,8 @@
 package com.boolsazo.bankchall.service.impl;
 
 import com.boolsazo.bankchall.domain.Account;
-import com.boolsazo.bankchall.dto.AccountResponse;
 import com.boolsazo.bankchall.dto.RegistAccountRequest;
+import com.boolsazo.bankchall.dto.api.AccountResponse;
 import com.boolsazo.bankchall.repository.AccountRepository;
 import com.boolsazo.bankchall.service.AccountService;
 import java.util.List;

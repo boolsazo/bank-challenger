@@ -15,15 +15,17 @@ public class RegistAccountRequest {
 
     private String accountNumMasked;
     private String bankName;
-    private boolean isUsed = true;
+    private boolean isUsed = false;
     private int userId;
+    private String fintechUseNum;
 
     public Account toWithdrawEntity() {
         return new Account(userId,
                 accountNumMasked,
                 bankName,
                 isUsed,
-                0);
+                0,
+                fintechUseNum);
     }
 
     public Account toSavingsEntity() {
@@ -31,6 +33,7 @@ public class RegistAccountRequest {
                 accountNumMasked,
                 bankName,
                 isUsed,
-                1);
+                1,
+                fintechUseNum);
     }
 }
