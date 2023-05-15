@@ -1,6 +1,6 @@
 package com.boolsazo.bankchall.repository;
 
-import com.boolsazo.bankchall.dto.GoalAccountNativeQueryResponse;
+import com.boolsazo.bankchall.dto.resultSet.GoalAccountResultSet;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -20,7 +20,7 @@ class GoalAccountRepositoryTest {
     @Test
     @DisplayName("goalId가 1일 때 출금 계좌")
     void showGoalWAccount() {
-        GoalAccountNativeQueryResponse wAccount = goalAccountRepository.showGoalWAccount(1);
+        GoalAccountResultSet wAccount = goalAccountRepository.showGoalWAccount(1);
         System.out.println("계좌 ID: " + wAccount.getAccount_Id());
         System.out.println("계좌 타입: " + wAccount.getType());
     }
@@ -28,7 +28,7 @@ class GoalAccountRepositoryTest {
     @Test
     @DisplayName("goalId가 1일 때 저축 계좌")
     void showGoalSAccount() {
-        GoalAccountNativeQueryResponse sAccount = goalAccountRepository.showGoalSAccount(1);
+        GoalAccountResultSet sAccount = goalAccountRepository.showGoalSAccount(1);
         System.out.println("계좌 ID: " + sAccount.getAccount_Id());
         System.out.println("계좌 타입: " + sAccount.getType());
     }

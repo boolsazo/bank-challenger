@@ -1,7 +1,7 @@
 package com.boolsazo.bankchall.service.impl;
 
 import com.boolsazo.bankchall.domain.GoalAccount;
-import com.boolsazo.bankchall.dto.GoalAccountNativeQueryResponse;
+import com.boolsazo.bankchall.dto.resultSet.GoalAccountResultSet;
 import com.boolsazo.bankchall.repository.GoalAccountRepository;
 import com.boolsazo.bankchall.service.GoalAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +19,12 @@ public class GoalAccountServiceImpl implements GoalAccountService {
     }
 
     @Override
-    public GoalAccountNativeQueryResponse showGoalWAccount(int goalId) throws Exception {
+    public GoalAccountResultSet showGoalWAccount(int goalId) throws Exception {
         return repository.showGoalWAccount(goalId);
     }
 
     @Override
-    public GoalAccountNativeQueryResponse showGoalSAccount(int goalId) throws Exception {
+    public GoalAccountResultSet showGoalSAccount(int goalId) throws Exception {
         return repository.showGoalSAccount(goalId);
     }
 
