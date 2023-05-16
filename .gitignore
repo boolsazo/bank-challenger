@@ -1,6 +1,5 @@
 ### Naver API Infomation
-/src/main/java/com/boolsazo/bankchall/naver/
-src/main/java/com/boolsazo/bankchall/naver/NaverApiInfo.java
+src/main/java/com/boolsazo/bankchall/naver/
 
 HELP.md
 target/
@@ -52,4 +51,8 @@ build/
 .vscode/
 
 ### Open API Information ###
+<<<<<<< HEAD
 !/src/main/resources/application.properties
+=======
+/src/main/resources/application.properties
+>>>>>>> 95a6c23d9f54649e043e7daa39149fa3a544c4b4
