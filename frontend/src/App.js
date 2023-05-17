@@ -1,8 +1,6 @@
 import React from 'react';
 import {Routes, Route, Link} from 'react-router-dom';
 import './App.css';
-import Hello from './pages/Hello';
-import Survey from './pages/Survey';
 import Main from './pages/Main';
 import User from './pages/User';
 import GoalMain from "./pages/GoalMain";
