@@ -69,5 +69,4 @@ function GoalMain() {
         </div>
     );
 }
-
 export default GoalMain;
