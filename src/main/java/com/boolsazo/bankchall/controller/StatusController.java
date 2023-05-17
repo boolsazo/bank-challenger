@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/status")
-@Tag(name = "상태 확인 API", description = "상태 확인 API")
+@Tag(name = "상태 확인", description = "상태 확인 API")
 public class StatusController {
 
     UserService userService;
