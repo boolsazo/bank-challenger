@@ -1,25 +1,27 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import {Routes, Route, Link} from 'react-router-dom';
 import './App.css';
-import Hello from './pages/Hello';
-import Survey from './pages/Survey';
 import Main from './pages/Main';
 import User from './pages/User';
-import Delete from './pages/Delete';
+import GoalMain from "./pages/GoalMain";
+import CreateGoal from "./pages/CreateGoal";
+import 'react-datepicker/dist/react-datepicker.css';
 
 function App() {
+
     return (
-        <BrowserRouter>
-            <div name='app'>
-                <Routes>
-                    <Route path="/" element={<Hello />} />
-                    <Route path="/survey" element={<Survey />} />
-                    <Route path="/main" element={<Main />} />
-                    <Route path="/user" element={<User />} />
-                    <Route path="/delete" element={<Delete />} />
-                </Routes>
-            </div>
-        </BrowserRouter>
+        <div className="app">
+            <nav>
+                <Link to="/goalMain">목표 현황</Link>
+            </nav>
+            <Routes>
+                <Route path="/main" element={<Main />} />
+                <Route path="/user" element={<User />} />
+                <Route path="/goalMain" element={<GoalMain />} />
+                <Route path="/createGoal" element={<CreateGoal/>}/>
+            </Routes>
+        </div>
+
     );
 }
 
