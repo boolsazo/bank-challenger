@@ -18,7 +18,7 @@ function User() {
                 .catch(error => console.log(error));
         })
         .catch(error => console.log(error));
-    }, []);
+    }, [login]);
 
     if (login === false) {
         window.location.href = "/";
