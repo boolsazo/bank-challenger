@@ -131,5 +131,4 @@ function CreateGoal() {
         </div>
     );
 }
-
 export default CreateGoal;
