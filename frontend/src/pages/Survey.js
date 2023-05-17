@@ -60,20 +60,21 @@ function Survey() {
         if (window.confirm(message)) {
             let sendData = JSON.stringify({
                 "userId": user["userId"],
-                "isMarried": (isMarried === "미혼") ? false : true,
+                "married": (isMarried === "미혼") ? false : true,
                 "monthlyIncome": Math.round(monthlyIncome),
                 "spendingRatio": spendingRatio,
                 "occupation": occupation,
                 "savings": Math.round(savings),
                 "loan": Math.round(loan),
             })
-    
+            
             axios({
                 method: "POST",
                 url: "/survey",
                 data: sendData,
                 headers: {"Content-type": "application/json;charset=UTF-8"}
             }).then(() => {
+                alert((isMarried === "미혼") ? false : true)
                 window.location.href = "/main";
             }).catch((error) => {
                 console.log(error);
