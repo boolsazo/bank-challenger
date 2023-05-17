@@ -74,7 +74,6 @@ function Survey() {
                 data: sendData,
                 headers: {"Content-type": "application/json;charset=UTF-8"}
             }).then(() => {
-                alert((isMarried === "미혼") ? false : true)
                 window.location.href = "/main";
             }).catch((error) => {
                 console.log(error);
