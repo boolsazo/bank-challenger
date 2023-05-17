@@ -73,17 +73,4 @@ public class StatusController {
 
         return user;
     }
-
-    @DeleteMapping(value = "/delete")
-    @Operation(summary = "회원 탈퇴 API", description = "해당 사용자가 로그인된 사용자인지 확인할 수 있는 API")
-    public void delete(HttpServletRequest request) {
-        int userId = (int) request.getSession().getAttribute("userId");
-
-        try {
-            userService.deleteByUserId(userId);
-        } catch (Exception e) {
-            System.out.println("Error in delete user");
-        }
-    }
-
 }

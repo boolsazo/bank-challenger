@@ -156,6 +156,7 @@ public class UserController {
     }
 
     @DeleteMapping(value = "/delete")
+    @Operation(summary = "회원 탈퇴 API", description = "해당 사용자가 로그인된 사용자인지 확인할 수 있는 API")
     public String delete(HttpServletRequest request) {
         try {
             int userId = (int) request.getSession().getAttribute("userId");
