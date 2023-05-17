@@ -22,7 +22,6 @@ function App() {
                     <Route path="/goalMain" element={<GoalMain />} />
                     <Route path="/createGoal" element={<CreateGoal/>}/>
                 </Routes>
-
             </div>
 
     );
