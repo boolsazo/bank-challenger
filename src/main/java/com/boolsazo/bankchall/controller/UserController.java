@@ -14,6 +14,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.client.RestTemplate;
 
@@ -45,6 +46,10 @@ public class UserController {
     @GetMapping("/login/callback")
     @Operation(summary = "네이버 로그인 callback API", description = "네이버 OPEN API를 이용하여 로그인 할 수 있는 API")
     public String LoginProcess(HttpServletRequest request) {
+        // cancel
+        if (request.getParameter("error") != null) {
+            return "redirect:/";
+        }
 
         /******************************************************************************************
          * 1. GET ACCESS TOKEN                                                                    *
@@ -144,7 +149,24 @@ public class UserController {
     public String logout(HttpSession session) {
         if (session.getAttribute("sessionId") != null) {
             session.invalidate();
+            System.out.println("세션 제거");
         }
+        System.out.println("로그아웃");
+        return "redirect:/";
+    }
+
+    @DeleteMapping(value = "/delete")
+    public String delete(HttpServletRequest request) {
+        try {
+            int userId = (int) request.getSession().getAttribute("userId");
+            userService.deleteByUserId(userId);
+            System.out.println("회원 탈퇴");
+        } catch (Exception e) {
+            System.out.println("Error in delete user");
+        }
+        request.getSession().invalidate();
+        System.out.println("세션 제거");
+
         return "redirect:/";
     }
 
