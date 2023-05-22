@@ -42,8 +42,11 @@ public class OpenBankAPIController {
     })
     @GetMapping("/{userId}/{code}/{type}")
     @Operation(summary = "오픈 뱅킹 API와 통신하는 API", description = "오픈 뱅킹 API와 통신할 수 있는 API")
-    public ResponseEntity registerAccount(@PathVariable("userId") int userId,
+    public ResponseEntity<String> registerAccount(@PathVariable("userId") int userId,
         @PathVariable("code") String code, @PathVariable("type") int type) {
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        System.out.println(code);
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
         try {
             UserOauth userOauth = null;
             Optional<UserOauth> UserOauthOptional = userOauthService.findByUserId(userId);

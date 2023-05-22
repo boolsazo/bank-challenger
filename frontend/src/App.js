@@ -1,6 +1,7 @@
 import React from "react";
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
-
+import ReactDOM from 'react-dom';
+import { Route, Switch, Redirect, historyApiFallback } from "react-router-dom";
+import { BrowserRouter, useHistory } from "react-router-dom/cjs/react-router-dom.min.js";
 import Hello from "./pages/Hello.js";
 import Survey from './pages/Survey';
 import Main from './pages/Main';
@@ -14,65 +15,24 @@ import Mypage from "./pages/Mypage.js";
 import ManageAccount from "./pages/ManageAccount.js";
 
 function App() {
-  return (
-      <BrowserRouter>
-        <Switch>
-          <Route path="/" exact render={(props) => <Hello {...props} />}/>
-
-          <Route
-              path="/survey"
-              exact
-              render={(props) => <Survey {...props} />}
-          />
-          <Route
-              path="/main"
-              exact
-              render={(props) => <Main {...props} />}
-          />
-          <Route
-              path="/user"
-              exact
-              render={(props) => <User {...props} />}
-          />
-          <Route
-              path="/delete"
-              exact
-              render={(props) => <Delete {...props} />}
-          />
-          <Route
-              path="/goalMain"
-              exact
-              render={(props) => <GoalMain {...props} />}
-          />
-          <Route
-              path="/createGoal"
-              exact
-              render={(props) => <CreateGoal {...props} />}
-          />
-          <Route
-              path="/goal-page"
-              exact
-              render={(props) => <Goal {...props} />}
-          />
-          <Route
-              path="/bfr-page"
-              exact
-              render={(props) => <Bfr {...props} />}
-          />
-          <Route
-              path="/mypage-page"
-              exact
-              render={(props) => <Mypage {...props} />}
-          />
-          <Route
-              path="/manageaccount-page"
-              exact
-              render={(props) => <ManageAccount {...props} />}
-          />
-          <Redirect to="/"/>
-        </Switch>
-      </BrowserRouter>
-  );
+    return (
+        <BrowserRouter>
+            <Switch>
+                <Route exact path="/" component={Hello} />
+                <Route exact path="/survey" component={Survey} />
+                <Route exact path="/main" component={Main} />
+                <Route exact path="/user" component={User} />
+                <Route exact path="/delete" component={Delete} />
+                <Route exact path="/goalMain" component={GoalMain} />
+                <Route exact path="/createGoal" component={CreateGoal} />
+                <Route exact path="/goal" component={Goal} />
+                <Route exact path="/bfr" component={Bfr} />
+                <Route exact path="/mypage" component={Mypage} />
+                <Route exact path="/manageaccount" component={ManageAccount} />
+                <Redirect to="/" />
+            </Switch>
+        </BrowserRouter>
+    );
 }
 
 export default App;
