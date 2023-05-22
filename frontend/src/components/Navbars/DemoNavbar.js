@@ -17,14 +17,14 @@ import {
   Container,
   Row,
   Col,
-  UncontrolledTooltip
+  UncontrolledTooltip,
 } from "reactstrap";
 
 class DemoNavbar extends React.Component {
   doLogin = () => {
     const history = useHistory();
     history.push("/login");
-  }
+  };
 
   componentDidMount() {
     let headroom = new Headroom(document.getElementById("navbar-main"));
@@ -32,18 +32,18 @@ class DemoNavbar extends React.Component {
   }
   state = {
     collapseClasses: "",
-    collapseOpen: false
+    collapseOpen: false,
   };
 
   onExiting = () => {
     this.setState({
-      collapseClasses: "collapsing-out"
+      collapseClasses: "collapsing-out",
     });
   };
 
   onExited = () => {
     this.setState({
-      collapseClasses: ""
+      collapseClasses: "",
     });
   };
 
@@ -58,7 +58,7 @@ class DemoNavbar extends React.Component {
           >
             <Container>
               <NavbarBrand className="mr-lg-5" to="/" tag={Link}>
-               Bank Challenger
+                Bank Challenger
               </NavbarBrand>
               <button className="navbar-toggler" id="navbar_global">
                 <span className="navbar-toggler-icon" />
@@ -90,7 +90,7 @@ class DemoNavbar extends React.Component {
                 </div>
                 <Nav className="navbar-nav-hover align-items-lg-center" navbar>
                   <UncontrolledDropdown nav>
-                    <DropdownToggle nav to="/goal-page" tag={Link} >
+                    <DropdownToggle nav to="/goal-page" tag={Link}>
                       <i className="ni ni-ui-04 d-lg-none mr-1" />
                       <span className="nav-link-inner--text">목표현황</span>
                     </DropdownToggle>
@@ -136,18 +136,13 @@ class DemoNavbar extends React.Component {
                     </UncontrolledTooltip>
                   </NavItem>
                   <NavItem className="d-none d-lg-block ml-lg-4">
-                      <Button
-                        className="btn-neutral btn-icon"
-                        color="default"
-                        href="/login"
-                      >
-                        <span className="btn-inner--icon">
-                          <i className="fa fa-cloud-download mr-2" />
-                        </span>
-                        <span className="nav-link-inner--text ml-1">
-                          네이버 아이디로 로그인
-                        </span>
-                      </Button>
+                    <a href="/login">
+                      <img
+                        src={require("../../assets/img/icons/common/btn_login_naver.png")}
+                        alt="네이버 아이디로 로그인"
+                        style={{ width: "250px" }}
+                      />
+                    </a>
                   </NavItem>
                 </Nav>
               </UncontrolledCollapse>
