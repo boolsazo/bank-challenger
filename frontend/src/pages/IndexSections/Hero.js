@@ -32,8 +32,11 @@ class Hero extends React.Component {
                       style={{ width: "200px" }}
                     />
                     <p className="lead text-white">
-                      뱅크 챌린저는 설정한 목표를 달성할 수 있도록 자동이체를 통해 관리해주는 서비스입니다.
+                      뱅크 챌린저는 설정한 목표를 달성할 수 있도록
+                      <br />
+                      자동이체를 통해 관리해주는 서비스입니다.
                     </p>
+                    <p className="lead text-white"></p>
                     <div className="btn-wrapper mt-5">
                       <Button
                         className="btn-white btn-icon mb-3 mb-sm-0"
@@ -44,7 +47,9 @@ class Hero extends React.Component {
                         <span className="btn-inner--icon mr-1">
                           <i className="ni ni-cloud-download-95" />
                         </span>
-                        <span className="btn-inner--text" >금융 대사량 테스트</span>
+                        <span className="btn-inner--text">
+                          금융 대사량 테스트
+                        </span>
                       </Button>{" "}
                       <Button
                         className="btn-icon mb-3 mb-sm-0"
