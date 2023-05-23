@@ -117,8 +117,10 @@ function CreateGoal({ setIsOpen }) {
     return (
         <>
             <h1>목표 생성하기</h1>
-            <button onClick={handleManualButtonClick}>직접 입력</button>
-            <button onClick={handleSearchButtonClick}>검색하여 입력</button>
+            <div style={{ display: "flex" }}>
+            <button style={{ flex: "1 1 0", marginRight: 0 }} onClick={handleManualButtonClick}>직접 입력</button>
+            <button style={{ flex: "1 1 0", marginLeft: 0 }} onClick={handleSearchButtonClick}>검색하여 입력</button>
+            </div>
             {inputMode === 'manual' ? (
                 <form className="create-goal" onSubmit={handleSubmit}>
                     <label>

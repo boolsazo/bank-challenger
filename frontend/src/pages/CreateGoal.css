@@ -1,6 +1,6 @@
 .create-goal {
-    width: 450px;
-    height: 500px;
+    width: 350px;
+    height: 450px;
     border-radius: 40px;
     flex-direction: column;
     gap: 20px;
@@ -9,7 +9,8 @@
     margin: 0 auto;
     padding: 1rem;
     box-sizing: border-box;
-    /* 추가적인 스타일 지정 */
+    /* Added styles */
+    /* Add a slight shadow */
 }
 
 

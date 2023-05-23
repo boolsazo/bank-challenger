@@ -8,6 +8,8 @@ import CreateGoal from "./CreateGoal";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import GoalFirstMain from "./GoalFirstMain";
+import "./CreateGoal.css";
+
 
 const api = axios.create({
     baseURL: "http://localhost:8080", // Replace this with the actual server URL
@@ -129,6 +131,11 @@ function GoalMain({ userId }) {
                         backgroundColor: "white",
                         padding: "1em",
                         zIndex: 1000,
+                        borderRadius: "20px", // 테두리를 둥글게 만듦
+                        boxShadow: "0 2px 30px rgba(0, 0, 0, 0.3)",
+
+
+
                     }}
                 >
                     <CreateGoal />
@@ -145,6 +152,8 @@ function GoalMain({ userId }) {
                         right: 0,
                         backgroundColor: "rgba(0, 0, 0, 0.7)",
                         zIndex: 999,
+
+
                     }}
                     onClick={() => setShowCreateGoal(false)}
                 />
