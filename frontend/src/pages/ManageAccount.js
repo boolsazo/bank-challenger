@@ -55,8 +55,6 @@ function ManageAccount() {
             setUser(response2.data);
           })
           .catch(error => console.log(error));
-
-
       })
       .catch(error => console.log(error));
   }, [login]);
@@ -83,15 +81,12 @@ function ManageAccount() {
   useEffect(() => {
     code = new URLSearchParams(window.location.search).get("code");
    // console.log("code : "+ new URLSearchParams(window.location.search).get("code"));
-    console.log("code = "+code);
-    console.log(user.userId);
-    console.log(code);
-    console.log(accountType);
+    // console.log("code = "+code);
+    // console.log(sessionStorage.getItem("userId"));
+    // console.log(code);
+    // console.log(accountType);
     if(code!=null){
-      console.log(`1 :${user.userId}`);
-      console.log(`2 : ${code}`);
-      console.log(`3 : ${accountType}`);
-      axios.get(`http://127.0.0.1:8080/openapi/${user.userId}/${code}/${accountType}`);
+      axios.get(`http://127.0.0.1:8080/openapi/${sessionStorage.getItem("userId")}/${code}/${accountType}`);
     }
   }, []);
 
@@ -107,7 +102,7 @@ function ManageAccount() {
         return shinhanLogo;
       case '산업은행':
         return kdbLogo;
-      case '기업은행':
+      case 'IBK기업은행':
         return ibkLogo;
       case '국민은행':
         return kbLogo;
@@ -150,7 +145,7 @@ function ManageAccount() {
 
 
   function RegisterWithdrawAccount() {
-    const handleClick = () => {
+    const registerWAccountClick = () => {
       setAccountType(0);
       const baseUrl =
         "https://testapi.openbanking.or.kr/oauth/2.0/authorize?response_type=code&client_id=3908213e-1560-424b-b582-620ee1368de7&redirect_uri=http://localhost:8080/manageaccount&scope=login inquiry transfer&state=12345678901234567890123456789012&auth_type=0";
@@ -158,7 +153,25 @@ function ManageAccount() {
     };
     return (
       <>
-        <button onClick={handleClick} style={{ fontSize: '12px', padding: '5px 23px', marginRight: '15px' }} className="btn-1 ml-1 btn btn-outline-info">계좌 추가하기</button>
+        <button onClick={registerWAccountClick} style={{ fontSize: '12px', padding: '5px 23px', marginRight: '15px' }} className="btn-1 ml-1 btn btn-outline-info">계좌 추가하기</button>
+      </>
+    );
+  }
+
+  
+  function DeleteWithdrawAccount({acntId}){
+    const deleteWAccountClick=()=>{
+     console.log(acntId);
+      try{
+      axios.delete(`/withdraw/${acntId}`);
+      }catch(error) {
+        console.error(error);
+      }
+    };
+
+    return (
+      <>
+      <button onClick={deleteWAccountClick} style={{ fontSize: '12px', padding: '5px 5px', marginRight: '15px' }} className="btn-1 ml-1 btn btn-danger">삭제</button>
       </>
     );
   }
@@ -187,12 +200,12 @@ function ManageAccount() {
                   src={getBankLogo(it.bankName)}
                   style={{ marginBottom: '3px', width: "15px" }}
                 /> {it.bankName} {it.accountNumMasked}</button>
+                <DeleteWithdrawAccount acntId={it.accountId}/>
             </div>
           ))}
         </div>
         <div style={{ display: 'flex' }}>
           <RegisterWithdrawAccount />
-          <button style={{ fontSize: '12px', padding: '5px 23px' }} className="btn-1 ml-1 btn btn-outline-info">계좌 삭제하기</button>
         </div>
       </div>
     )
@@ -233,7 +246,7 @@ function ManageAccount() {
       <DemoNavbar />
       <main id="main">
         <section className="section section-hero section-shaped">
-          <div className="shape shape-style-1 bg-gradient-default">
+          <div className="shape shape-style-1 shape-default">
             <span />
             <span />
             <span />
