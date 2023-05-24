@@ -12,11 +12,11 @@ import {
   InputGroup,
   Container,
   Row,
-  Col,
+  Col
 } from "reactstrap";
 import DemoNavbar from "components/Navbars/DemoNavbar.js";
 import SimpleFooter from "components/Footers/SimpleFooter.js";
-import RowAndColumnSpacing from "./BfrTest";
+import ResponsiveGrid from "./IndexSections/ResponsiveGrid";
 
 class Login extends React.Component {
   componentDidMount() {
@@ -41,11 +41,13 @@ class Login extends React.Component {
               <span />
             </div>
             <Container className="pt-lg-7">
-              <RowAndColumnSpacing answer1={0} answer2={0} index={0} />
+              <h2 className="display-3 text-white" style={{textAlign: 'center'}}>
+                000님과 같은 HIF에 대해 알려드릴게요!
+              </h2>
+              <ResponsiveGrid />
             </Container>
           </section>
         </main>
-        {/*<SimpleFooter />*/}
       </>
     );
   }
