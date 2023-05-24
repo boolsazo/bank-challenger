@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, Container, Row, Col} from "reactstrap";
+import {Container, Row, Col} from "reactstrap";
 
 class Hero extends React.Component {
   render() {
