@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Headroom from "headroom.js";
 import {
   Button,
@@ -17,37 +17,39 @@ import {
   Container,
   Row,
   Col,
-  UncontrolledTooltip
+  UncontrolledTooltip,
 } from "reactstrap";
 
 class DemoNavbar extends React.Component {
-  doLogin = () => {
-    const history = useHistory();
-    history.push("/login");
-  }
-
   componentDidMount() {
     let headroom = new Headroom(document.getElementById("navbar-main"));
     headroom.init();
   }
   state = {
     collapseClasses: "",
-    collapseOpen: false
+    collapseOpen: false,
   };
 
   onExiting = () => {
     this.setState({
-      collapseClasses: "collapsing-out"
+      collapseClasses: "collapsing-out",
     });
   };
 
   onExited = () => {
     this.setState({
-      collapseClasses: ""
+      collapseClasses: "",
     });
   };
 
+  deleteSession = () => {
+    sessionStorage.clear();
+  };
+
   render() {
+    const userId = sessionStorage.getItem("userId");
+    const bfr = sessionStorage.getItem("bfr");
+    const name = sessionStorage.getItem("name");
     return (
       <>
         <header className="header-global">
@@ -58,7 +60,7 @@ class DemoNavbar extends React.Component {
           >
             <Container>
               <NavbarBrand className="mr-lg-5" to="/" tag={Link}>
-               Bank Challenger
+                Bank Challenger
               </NavbarBrand>
               <button className="navbar-toggler" id="navbar_global">
                 <span className="navbar-toggler-icon" />
@@ -90,28 +92,28 @@ class DemoNavbar extends React.Component {
                 </div>
                 <Nav className="navbar-nav-hover align-items-lg-center" navbar>
                   <UncontrolledDropdown nav>
-                    <DropdownToggle nav to="/goal-page" tag={Link} >
+                    <DropdownToggle nav to="/goal" tag={Link}>
                       <i className="ni ni-ui-04 d-lg-none mr-1" />
                       <span className="nav-link-inner--text">목표현황</span>
                     </DropdownToggle>
                   </UncontrolledDropdown>
 
                   <UncontrolledDropdown nav>
-                    <DropdownToggle nav to="/bfr-page" tag={Link}>
+                    <DropdownToggle nav to="/bfr" tag={Link}>
                       <i className="ni ni-ui-04 d-lg-none mr-1" />
                       <span className="nav-link-inner--text">금융대사량</span>
                     </DropdownToggle>
                   </UncontrolledDropdown>
 
                   <UncontrolledDropdown nav>
-                    <DropdownToggle nav to="/manageaccount-page" tag={Link}>
+                    <DropdownToggle nav to="/manageaccount" tag={Link}>
                       <i className="ni ni-ui-04 d-lg-none mr-1" />
                       <span className="nav-link-inner--text">계좌 관리</span>
                     </DropdownToggle>
                   </UncontrolledDropdown>
 
                   <UncontrolledDropdown nav>
-                    <DropdownToggle nav to="/mypage-page" tag={Link}>
+                    <DropdownToggle nav to="/mypage" tag={Link}>
                       <i className="ni ni-collection d-lg-none mr-1" />
                       <span className="nav-link-inner--text">나의 정보</span>
                     </DropdownToggle>
@@ -119,36 +121,44 @@ class DemoNavbar extends React.Component {
                 </Nav>
 
                 <Nav className="align-items-lg-center ml-lg-auto" navbar>
-                  <NavItem>
-                    <NavLink
-                      className="nav-link-icon"
-                      href="https://github.com/boolsazo/bank-challenger"
-                      id="tooltip112445449"
-                      target="_blank"
-                    >
-                      <i className="fa fa-github" />
-                      <span className="nav-link-inner--text d-lg-none ml-2">
-                        Github
-                      </span>
-                    </NavLink>
-                    <UncontrolledTooltip delay={0} target="tooltip112445449">
-                      Star us on Github
-                    </UncontrolledTooltip>
-                  </NavItem>
-                  <NavItem className="d-none d-lg-block ml-lg-4">
-                      <Button
-                        className="btn-neutral btn-icon"
-                        color="default"
-                        href="/login"
-                      >
-                        <span className="btn-inner--icon">
-                          <i className="fa fa-cloud-download mr-2" />
-                        </span>
-                        <span className="nav-link-inner--text ml-1">
-                          네이버 아이디로 로그인
-                        </span>
-                      </Button>
-                  </NavItem>
+                  {userId === null ? (
+                    <>
+                      <NavItem className="d-none d-lg-block ml-lg-4">
+                        <Button
+                          className="btn-neutral btn-icon"
+                          color="default"
+                          href="/login"
+                          onClick={this.getSession}
+                        >
+                          <span className="nav-link-inner--text ml-1">
+                            로그인
+                          </span>
+                        </Button>
+                      </NavItem>
+                    </>
+                  ) : (
+                    <>
+                      <NavItem>
+                        <UncontrolledDropdown nav>
+                          <span className="text-white">
+                            {name}님 안녕하세요
+                          </span>
+                        </UncontrolledDropdown>
+                      </NavItem>
+                      <NavItem className="d-none d-lg-block ml-lg-4">
+                        <Button
+                          className="btn-neutral btn-icon"
+                          color="default"
+                          href="/logout"
+                          onClick={this.deleteSession}
+                        >
+                          <span className="nav-link-inner--text ml-1">
+                            로그아웃
+                          </span>
+                        </Button>
+                      </NavItem>
+                    </>
+                  )}
                 </Nav>
               </UncontrolledCollapse>
             </Container>
