@@ -37,7 +37,7 @@ function CreateGoal({ setIsOpen }) {
 
 
     const searchResultsContainerStyle = {
-        maxHeight: '200px',
+        maxHeight: '300px',
         overflowY: 'auto',
     };
 
@@ -123,6 +123,7 @@ function CreateGoal({ setIsOpen }) {
             <h1 style={{textAlign:"center", margin: "20px 20px"}}>목표 생성하기</h1>
             <button onClick={handleManualButtonClick} style={{ marginRight: "2%", width: "49%", boxShadow: "0 2px 10px rgba(0, 0, 0, 0.3)"}}>직접 입력</button>
             <button onClick={handleSearchButtonClick} style={{ width: "49%", boxShadow: "0 2px 10px rgba(0, 0, 0, 0.3)"}}>검색하여 입력</button>
+
             {inputMode === 'manual' ? (
                 <form className="create-goal" onSubmit={handleSubmit}>
                     <label>
@@ -215,8 +216,9 @@ function CreateGoal({ setIsOpen }) {
                                     <li key={result.productId} onClick={() => handleResultSelect(result)}>
                                         <div className={`search-result ${selectedResult === result ? 'selected' : ''}`}>
                                             <div className="search-result-image">
+
                                                 <img src={result.image} alt={result.title} style={{ width: '100px', height: '80px' }}/>
-                                            </div>
+                      </div>
                                             <div className="search-result-details">
                                                 <p>상품명: {result.title}</p>
                                                 <p>가격: {result.lprice}</p>
@@ -232,6 +234,7 @@ function CreateGoal({ setIsOpen }) {
                             <label>
                                 목표 금액
                                 <input type="text" value={goalAmount} onChange={handleChange} style = {{marginLeft: "60px", width: "230px",height: "40px", padding: "0.8rem", border: "3px solid #ccc", borderRadius: "30px", boxShadow: "0 2px 10px rgba(0, 0, 0, 0.3)" }}/>
+
                             </label>
 
                         </>
