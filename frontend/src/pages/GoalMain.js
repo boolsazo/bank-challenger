@@ -6,7 +6,6 @@ import "./GoalMain.css";
 import GoalDetail from "./GoalDetail";
 import CreateGoal from "./CreateGoal";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
 import GoalFirstMain from "./GoalFirstMain";
 import { Button, Card } from "reactstrap";
 import "./CreateGoal.css";
