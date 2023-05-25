@@ -8,15 +8,16 @@ import CreateGoal from "./CreateGoal";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import GoalFirstMain from "./GoalFirstMain";
+import { Button, Card } from "reactstrap";
 import "./CreateGoal.css";
 import { Button, Card } from "reactstrap";
 
-
 const api = axios.create({
-    baseURL: "http://localhost:8080", // Replace this with the actual server URL
+  baseURL: "http://localhost:8080", // Replace this with the actual server URL
 });
 
 function GoalMain({ userId }) {
+
     const [showCreateGoal, setShowCreateGoal] = useState(false);
     const [showGoalDetail, setShowGoalDetail] = useState(false);
     const [selectedGoal, setSelectedGoal] = useState(null);
@@ -118,13 +119,15 @@ function GoalMain({ userId }) {
                 ))}
             </Slider>
 
+
             <div
-                style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    marginTop: "50px",
-                }}
+              className="slide"
+              onClick={() => handleSlideClick(goal.goalId)}
+              onMouseEnter={handleSlideMouseEnter}
+              onMouseLeave={handleSlideMouseLeave}
+              key={goal.goalId}
             >
+
                 <Button
                     color="primary"
                     onClick={handleCreateGoalClick}
@@ -139,6 +142,17 @@ function GoalMain({ userId }) {
                     목표 생성
                 </Button>
             </div>
+
+              <div
+                className="bookmark"
+                style={{ backgroundColor: goal.goalImage }}
+              ></div>
+              <h3>{goal.goalName}</h3>
+              <h2>{goal.goalAmount}</h2>
+              <h2>{goal.startDate}</h2>
+            </div>
+
+
             {showCreateGoal && (
                 <div
                     style={{
@@ -157,7 +171,7 @@ function GoalMain({ userId }) {
                     }}
                 >
                     <CreateGoal />
-                    <button onClick={() => setShowCreateGoal(false)}>Close</button>
+                    <button onClick={() => setShowCreateGoal(false)} style={{fontSize: "12px",borderRadius: "50px",color:"black", position: "fixed", top: 0, left: 0,}}>X</button>
                 </div>
             )}
             {showCreateGoal && (
@@ -208,8 +222,26 @@ function GoalMain({ userId }) {
                     onClick={handleGoalDetailClose}
                 />
             )}
+
         </div>
-    );
+      )}
+
+      {showGoalDetail && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            backgroundColor: "rgba(0, 0, 0, 0.7)",
+            zIndex: 999,
+          }}
+          onClick={handleGoalDetailClose}
+        />
+      )}
+    </div>
+  );
 }
 
 export default GoalMain;
