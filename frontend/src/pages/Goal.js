@@ -63,7 +63,7 @@ class Landing extends React.Component {
                   display: "flex",
                 }}
               >
-                <GoalMain userId={2} />
+                <GoalMain userId={sessionStorage.getItem("userId")} />
               </div>
             </section>
           </div>
