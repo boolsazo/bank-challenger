@@ -21,7 +21,7 @@ import SimpleFooter from "components/Footers/SimpleFooter.js";
 
 import GoalMain from "./GoalMain"; // GoalMain 컴포넌트를 import합니다.
 
-class Landing extends React.Component {
+class Goal extends React.Component {
   state = {};
   componentDidMount() {
     document.documentElement.scrollTop = 0;
@@ -73,4 +73,4 @@ class Landing extends React.Component {
   }
 }
 
-export default Landing;
+export default Goal;
