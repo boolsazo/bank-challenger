@@ -37,7 +37,7 @@ function GoalMain({ userId }) {
         console.error(err);
       });
   }, [userId]);
-  if (userId === 2 && goals.length === 0) {
+  if (goals.length === 0) {
     return <GoalFirstMain />;
   }
   const handleSlideClick = (goalId) => {
@@ -76,7 +76,7 @@ function GoalMain({ userId }) {
     <div className="container mukho">
       <Slider
         dots={true}
-        infinite={true}
+        infinite={false}
         speed={500}
         slidesToShow={3}
         slidesToScroll={1}
