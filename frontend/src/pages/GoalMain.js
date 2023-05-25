@@ -6,21 +6,15 @@ import "./GoalMain.css";
 import GoalDetail from "./GoalDetail";
 import CreateGoal from "./CreateGoal";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
 import GoalFirstMain from "./GoalFirstMain";
 import { Button, Card } from "reactstrap";
 import "./CreateGoal.css";
-
-const api = axios.create({
-  baseURL: "http://localhost:8080", // Replace this with the actual server URL
-});
 
 function GoalMain({ userId }) {
   const [showCreateGoal, setShowCreateGoal] = useState(false);
   const [showGoalDetail, setShowGoalDetail] = useState(false);
   const [selectedGoal, setSelectedGoal] = useState(null);
   const [goals, setGoals] = useState([]);
-  const history = useHistory();
 
   const updateGoals = () => {
     axios
@@ -34,9 +28,8 @@ function GoalMain({ userId }) {
   };
 
   useEffect(() => {
-    // Fetch goals data from the server
     axios
-      .get(`/goal/list/${userId}`) // Replace with your backend API URL and user ID
+      .get(`/goal/list/${userId}`)
       .then((res) => {
         setGoals(res.data.goals);
       })
@@ -49,7 +42,7 @@ function GoalMain({ userId }) {
   }
   const handleSlideClick = (goalId) => {
     axios
-      .get(`/goal/detail/${goalId}`) // Replace with your backend API URL
+      .get(`/goal/detail/${goalId}`)
       .then((res) => {
         setSelectedGoal(res.data);
         setShowGoalDetail(true);
@@ -60,22 +53,17 @@ function GoalMain({ userId }) {
   };
 
   const handleSlideMouseEnter = (e) => {
-    e.currentTarget.style.backgroundColor = "#f0f0f0"; // Change to the color you want
+    e.currentTarget.style.backgroundColor = "#f0f0f0";
     e.currentTarget.style.color = "#7691F6";
   };
 
   const handleSlideMouseLeave = (e) => {
-    e.currentTarget.style.backgroundColor = "#7691F6"; // Change to the original color
+    e.currentTarget.style.backgroundColor = "#7691F6";
     e.currentTarget.style.color = "#f0f0f0";
   };
 
   const handleCreateGoalClick = () => {
     setShowCreateGoal(true);
-    updateGoals();
-  };
-
-  const handleCreateGoalClose = () => {
-    setShowCreateGoal(false);
     updateGoals();
   };
 
@@ -115,7 +103,6 @@ function GoalMain({ userId }) {
           </Card>
         ))}
       </Slider>
-
       <div
         style={{
           display: "flex",
@@ -148,12 +135,24 @@ function GoalMain({ userId }) {
             backgroundColor: "white",
             padding: "1em",
             zIndex: 1000,
-            borderRadius: "20px", // 테두리를 둥글게 만듦
+            borderRadius: "20px",
             boxShadow: "0 2px 30px rgba(0, 0, 0, 0.3)",
           }}
         >
           <CreateGoal />
-          <button onClick={() => setShowCreateGoal(false)}>Close</button>
+          <button
+            onClick={() => setShowCreateGoal(false)}
+            style={{
+              fontSize: "12px",
+              borderRadius: "50px",
+              color: "black",
+              position: "fixed",
+              top: 0,
+              left: 0,
+            }}
+          >
+            X
+          </button>
         </div>
       )}
       {showCreateGoal && (
@@ -188,13 +187,7 @@ function GoalMain({ userId }) {
             goalId={selectedGoal.goalId}
             onClose={handleGoalDetailClose}
           />
-          <button
-            type="button"
-            class="btn btn-primary"
-            onClick={handleGoalDetailClose}
-          >
-            Close
-          </button>
+          <button onClick={handleGoalDetailClose}>Close</button>
         </div>
       )}
 
