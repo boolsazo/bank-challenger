@@ -12,7 +12,7 @@ const api = axios.create({
 
 function CreateGoal({ setIsOpen }) {
   const [inputMode, setInputMode] = useState("manual");
-  const [userId, setUserId] = useState("2");
+  const [userId, setUserId] = useState(sessionStorage.getItem("userId"));
   const [category, setCategory] = useState("");
   const [goalName, setGoalName] = useState("");
   const [productId, setProductId] = useState("");
@@ -46,7 +46,7 @@ function CreateGoal({ setIsOpen }) {
     setSavingAmount("");
     setDay("");
     setStartDate(null);
-    setGoalImage(null);
+    setGoalImage("#000000");
     setProductId("");
   };
 
@@ -57,7 +57,7 @@ function CreateGoal({ setIsOpen }) {
       const response = await api.get("/goal/search", {
         params: { query: searchQuery },
       });
-      if (searchQuery.length === 0) return;
+      if (searchQuery.match(/\S/) === null) return;
       setSearchResults(response.data.items);
       console.log(response.data.items);
       // Assuming the response data has a field 'items' that contains the search results
@@ -244,7 +244,7 @@ function CreateGoal({ setIsOpen }) {
       ) : (
         <form className="create-goal" onSubmit={handleSubmit}>
           <label>
-            목표 금액
+            목표 이름
             <input
               type="text"
               value={goalName}
