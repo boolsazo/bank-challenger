@@ -26,7 +26,7 @@ public interface SavingHistoryRepository extends JpaRepository<SavingHistory, In
                    + "WHERE user_id = :userId", nativeQuery = true)
     List<SavingHistoryResultSet> showAllByUserId(@Param("userId") int userId);
 
-    @Query(value = "SELECT SUM(saving_amount) FROM bankchall.saving_history \n"
+    @Query(value = "SELECT IFNULL(SUM(saving_amount), 0) FROM bankchall.saving_history \n"
                        + "where user_id = :userId", nativeQuery = true)
     int showSavingAmountByUserId(@Param("userId") int userId);
 

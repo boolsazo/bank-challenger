@@ -103,10 +103,11 @@ public class StatusController {
                 }
                 ++achievementCount;
             }
-            int achievementRate = (Math.round(achievementCount / goal.getCount() * 100));
             userResponse.setGoalCnt(goal.getCount());
+            int achievementRate = goal.getCount() == 0 ? 0 : (Math.round(achievementCount / goal.getCount() * 100));
             userResponse.setAchievementRate(achievementRate);
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("THIS USER DOESN'T HAVE ANY GOAL");
         }
 
@@ -114,6 +115,7 @@ public class StatusController {
             int savingAmount = savingHistoryService.showSavingAmountByUserId(userId);
             userResponse.setSavingAmount(savingAmount);
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("THIS USER DOESN'T SAVE MONEY");
         }
 
