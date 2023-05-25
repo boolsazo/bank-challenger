@@ -139,7 +139,7 @@ function GoalMain({ userId }) {
                     }}
                 >
                     <CreateGoal />
-                    <button onClick={() => setShowCreateGoal(false)}>Close</button>
+                    <button onClick={() => setShowCreateGoal(false)} style={{fontSize: "12px",borderRadius: "50px",color:"black", position: "fixed", top: 0, left: 0,}}>X</button>
                 </div>
             )}
             {showCreateGoal && (
