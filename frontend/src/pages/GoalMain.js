@@ -9,6 +9,7 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import GoalFirstMain from "./GoalFirstMain";
 import "./CreateGoal.css";
+import { Button, Card } from "reactstrap";
 
 
 const api = axios.create({
@@ -61,10 +62,12 @@ function GoalMain({ userId }) {
 
     const handleSlideMouseEnter = (e) => {
         e.currentTarget.style.backgroundColor = "#f0f0f0"; // Change to the color you want
+        e.currentTarget.style.color = "#7691F6";
     };
 
     const handleSlideMouseLeave = (e) => {
-        e.currentTarget.style.backgroundColor = "#50508C"; // Change to the original color
+        e.currentTarget.style.backgroundColor = "#7691F6"; // Change to the original color
+        e.currentTarget.style.color = "#f0f0f0";
     };
 
     const handleCreateGoalClick = () => {
@@ -84,10 +87,10 @@ function GoalMain({ userId }) {
     };
 
     return (
-        <div className="container">
+        <div className="container mukho">
             <Slider
                 dots={true}
-                infinite={false}
+                infinite={true}
                 speed={500}
                 slidesToShow={3}
                 slidesToScroll={1}
@@ -95,19 +98,23 @@ function GoalMain({ userId }) {
                 arrows={true}
             >
                 {goals.map((goal) => (
-                    <div
-                        className="slide"
-                        onClick={() => handleSlideClick(goal.goalId)}
-                        onMouseEnter={handleSlideMouseEnter}
-                        onMouseLeave={handleSlideMouseLeave}
-                        key={goal.goalId}
-                    >
-                        <h3>{goal.goalName}</h3>
-                        <h2>{goal.goalAmount}</h2>
-
-                        <h2>{goal.startDate}</h2>
-
-                    </div>
+                    <Card className="muk d-flex justify-content-center align-items-center">
+                        <div
+                            className="slide"
+                            onClick={() => handleSlideClick(goal.goalId)}
+                            onMouseEnter={handleSlideMouseEnter}
+                            onMouseLeave={handleSlideMouseLeave}
+                            key={goal.goalId}
+                        >
+                            <div
+                                className="bookmark"
+                                style={{ backgroundColor: goal.goalImage }}
+                            ></div>
+                            <h3>{goal.goalName}</h3>
+                            <h2>{goal.goalAmount}</h2>
+                            <h2>{goal.startDate}</h2>
+                        </div>
+                    </Card>
                 ))}
             </Slider>
 
@@ -118,9 +125,20 @@ function GoalMain({ userId }) {
                     marginTop: "50px",
                 }}
             >
-                <button onClick={handleCreateGoalClick}>목표 생성</button>
+                <Button
+                    color="primary"
+                    onClick={handleCreateGoalClick}
+                    onMouseEnter={handleSlideMouseEnter}
+                    onMouseLeave={handleSlideMouseLeave}
+                    style={{
+                        width: "33%",
+                        backgroundColor: "#7691F6",
+                        border: "0",
+                    }}
+                >
+                    목표 생성
+                </Button>
             </div>
-
             {showCreateGoal && (
                 <div
                     style={{
