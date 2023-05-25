@@ -1,20 +1,19 @@
-import * as React from 'react';
-import {useState} from 'react';
-import {styled, useTheme} from '@mui/material/styles';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import LinearProgressWithLabel
-  from "./IndexSections/LinearProgressWithLabel.js";
+import * as React from "react";
+import { useState } from "react";
+import { styled, useTheme } from "@mui/material/styles";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import LinearProgressWithLabel from "./IndexSections/LinearProgressWithLabel.js";
 import ResponsiveDialog from "./IndexSections/ResponsiveDialog.js";
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
 // import ResponsiveDialog from "./IndexSections/ResponsiveDialog.js";
 
-const Item = styled(Paper)(({theme}) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
   ...theme.typography.body2,
   padding: theme.spacing(1),
-  textAlign: 'center',
+  textAlign: "center",
   color: theme.palette.text.secondary,
 }));
 
@@ -59,13 +58,6 @@ const questions = [
   {question: '', answer_1: '', answer_2: ''}
 ];
 
-const request = {
-  userId: '',
-  investTendency: 0,
-  consumptionTendency: 0,
-  timeOrientation: 0
-};
-
 export default function RowAndColumnSpacing(props) {
   const [data, setData] = useState(questions);
   const [answer1, setAnswer1] = useState(props.answer1);
@@ -98,72 +90,75 @@ export default function RowAndColumnSpacing(props) {
       request.timeOrientation = answer1 > answer2 ? 1 : 2
       setAnswer1(0)
       setAnswer2(0)
-    }
 
     if (index === 7) {
-      setFlag(true)
+      setFlag(true);
     }
   };
 
   return (
-      <Card sx={{minWidth: 275}}>
-        <Box sx={{width: '90%', margin: '5%'}}>
-          <LinearProgressWithLabel progress={index}/>
-          {flag ? <ResponsiveDialog flag={true} answer1={answer1}
-                                    answer2={answer2} request={request} /> : null}
-          <Grid container rowSpacing={1} columnSpacing={{xs: 1, sm: 2, md: 3}}>
-            <Grid item xs={12} sx={{height: '50%'}}>
-              <Item>
-                {data[index].question}
-              </Item>
-            </Grid>
-
-            <Grid item xs={6}>
-              <Item>
-                <Box
-                    onClick={() => {
-                      setAnswer1(answer1 + 1)
-                      handleNext()
-                      setProgress(index + 1)
-                    }}
-                    sx={{
-                      height: '50%',
-                      '&:hover': {
-                        cursor: 'pointer',
-                        color: 'white',
-                        backgroundColor: 'text.disabled',
-                        opacity: [0.9, 0.8, 0.7],
-                      },
-                    }}
-                >
-                  {data[index].answer_1}
-                </Box>
-              </Item>
-            </Grid>
-            <Grid item xs={6}>
-              <Item>
-                <Box
-                    onClick={() => {
-                      setAnswer2(answer2 + 1)
-                      handleNext()
-                      setIndex(index + 1)
-                    }}
-                    sx={{
-                      height: '50%',
-                      '&:hover': {
-                        cursor: 'pointer',
-                        color: 'white',
-                        backgroundColor: 'text.disabled',
-                        opacity: [0.9, 0.8, 0.7],
-                      },
-                    }}
-                >
-                  {data[index].answer_2}
-                </Box>
-              </Item>
-            </Grid>
+    <Card sx={{ minWidth: 275 }}>
+      <Box sx={{ width: "90%", margin: "5%" }}>
+        <LinearProgressWithLabel progress={index} />
+        {flag ? (
+          <ResponsiveDialog
+            flag={true}
+            answer1={answer1}
+            answer2={answer2}
+            request={request}
+          />
+        ) : null}
+        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+          <Grid item xs={12} sx={{ height: "50%" }}>
+            <Item>{data[index].question}</Item>
           </Grid>
-        </Box>
-      </Card>
+
+          <Grid item xs={6}>
+            <Item>
+              <Box
+                onClick={() => {
+                  setAnswer1(answer1 + 1);
+                  handleNext();
+                  setProgress(index + 1);
+                }}
+                sx={{
+                  height: "50%",
+                  "&:hover": {
+                    cursor: "pointer",
+                    color: "white",
+                    backgroundColor: "text.disabled",
+                    opacity: [0.9, 0.8, 0.7],
+                  },
+                }}
+              >
+                {data[index].answer_1}
+              </Box>
+            </Item>
+          </Grid>
+          <Grid item xs={6}>
+            <Item>
+              <Box
+                onClick={() => {
+                  setAnswer2(answer2 + 1);
+                  handleNext();
+                  setIndex(index + 1);
+                }}
+                sx={{
+                  height: "50%",
+                  "&:hover": {
+                    cursor: "pointer",
+                    color: "white",
+                    backgroundColor: "text.disabled",
+                    opacity: [0.9, 0.8, 0.7],
+                  },
+                }}
+              >
+                {data[index].answer_2}
+              </Box>
+            </Item>
+          </Grid>
+        </Grid>
+      </Box>
+    </Card>
   );
 }
