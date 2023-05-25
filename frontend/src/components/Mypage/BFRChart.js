@@ -1,6 +1,5 @@
 import { React, useState, useEffect } from "react";
 import axios from "axios";
-//import ReactApexChart from "react-apexcharts";
 import BubbleChart from "@testboxlab/react-bubble-chart-d3";
 
 const BFRChart = () => {
@@ -22,32 +21,46 @@ const BFRChart = () => {
       window.location.href = "/";
     }
   }, []);
-  //"소비", "예적금", "투자(주식, 코인)", "고정비용(보험,세금)"
   console.log("BFR", bfr);
-  console.log("consumption type", typeof bfr.consumption);
-  var consumption = bfr.consumption;
+  console.log("consumption type", bfr.consumption);
 
   return (
     <BubbleChart
-      width={450}
+      width={600}
       height={450}
-      fontFamily="Arial"
+      legendFont={{
+        family: 'Arial',
+        size: 12,
+        color: '#000',
+        weight: 'bold',
+      }}
+  valueFont={{
+        family: 'Arial',
+        size: 12,
+        color: '#fff',
+        weight: 'bold',
+      }}
+  labelFont={{
+        family: 'Arial',
+        size: 16,
+        color: '#fff',
+        weight: 'bold',
+      }}
       data={[
-        {
-          label: `소비`,
-          value: 11,
-        },
-        { label: "예적금", value: 22 },
-        { label: "투자(주식, 코인)", value: 33 },
-        { label: "고정비용(보험,세금)", value: 44 },
+        { label: '소비', value:  bfr.consumption, color:  '#C185FF'},
+        { label: '예적금', value:  bfr.deposit, color: '#F7819A' },
+        { label: '투자', value:  bfr.invest, color: 'rgb(118, 145, 246)'},
+        { label: '고정비용', value:  bfr.fixedCost, color: 'rgb(237, 237, 6)' }
       ]}
       showLegend={true}
+      legendPercentage={20}
       graph={{
         zoom: 1,
-        offsetX: 2,
-        offsety: 2,
+        offsetX: -0.05,
+        offsety: -0.01,
       }}
       charsBeforeSplit={12}
+      overflow={true}
     />
   );
 };

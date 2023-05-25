@@ -27,13 +27,13 @@ const Profile = () => {
   useEffect(() => {
     if (userId) {
       axios
-      .get("/survey/" + sessionStorage.getItem("userId"))
-      .then((response) => {
-        setSurvey(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+        .get("/survey/" + sessionStorage.getItem("userId"))
+        .then((response) => {
+          setSurvey(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     } else {
       // userId가 없으면 메인 페이지로 이동
       window.location.href = "/";
@@ -81,111 +81,66 @@ const Profile = () => {
             <Card className="card-profile shadow mt--300">
               <div className="px-4">
                 <Row className="justify-content-center">
-                  <Col className="order-lg-2" lg="3">
+                  <Col className="order-lg-2">
                     <div className="card-profile-image">
                       <a href="#pablo" onClick={(e) => e.preventDefault()}>
                         <img
                           alt="..."
                           className="rounded-circle"
                           src={sessionStorage.getItem("profileImage")}
-                          maxwidth="250px"
                         />
                       </a>
                     </div>
                   </Col>
                   <Col
-                    className="order-lg-3 text-lg-right align-self-lg-center"
-                    lg="4"
-                  >
+                    className="order-lg-3 text-lg-right align-self-lg-center" lg="4">
                     <div className="card-profile-actions py-4 mt-lg-0">
-                      <Button
-                        className="mr-4"
-                        color="info"
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                        size="sm"
-                      >
-                        Connect
-                      </Button>
-                      <Button
-                        className="float-right"
-                        color="default"
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                        size="sm"
-                      >
-                        Message
-                      </Button>
                     </div>
                   </Col>
                   <Col className="order-lg-1" lg="4">
-                    <div className="card-profile-stats d-flex justify-content-center">
-                      <div>
-                        <span className="heading">10</span>
-                        <span className="description">Friends</span>
-                      </div>
-                      <div>
-                        <span className="heading">10</span>
-                        <span className="description">Photos</span>
-                      </div>
-                      <div>
-                        <span className="heading">89</span>
-                        <span className="description">Comments</span>
-                      </div>
-                    </div>
+                    <div></div>
                   </Col>
                 </Row>
                 <div className="text-center mt-5">
                   <h3>
-                    name
-                    <span className="font-weight-light">, age</span>
+                    {sessionStorage.getItem("name")}
+                    <span className="font-weight-light">
+                      , {sessionStorage.getItem("age")}
+                    </span>
                   </h3>
-                  <div className="h6 font-weight-300">
-                    <i className="ni location_pin mr-2" />
-                    금융대사량
+                  <div className="h3">
+                    {sessionStorage.getItem("financialType")}
                   </div>
-                  <div className="h6 mt-4">
-                    <i className="ni business_briefcase-24 mr-2" />
-                    Solution Manager - Creative Tim Officer
+                </div>
+                <div className="card-profile-stats d-flex justify-content-center">
+                  <div>
+                    <span className="heading">{sessionStorage.getItem("goalCnt")}</span>
+                    <span className="description">목표 갯수</span>
                   </div>
                   <div>
-                    <i className="ni education_hat mr-2" />
-                    University of Computer Science
+                    <span className="heading">{sessionStorage.getItem("achievementRate")}</span>
+                    <span className="description">목표 달성률</span>
+                  </div>
+                  <div>
+                    <span className="heading">{sessionStorage.getItem("savingAmount")}</span>
+                    <span className="description">현재까지 모은 금액</span>
                   </div>
                 </div>
                 <div className="mt-5 py-5 border-top text-center">
                   <Row className="justify-content-center">
-                  <Col lg="4">
-                      <div>이름: {sessionStorage.getItem("name")}</div>
-                      <div>이메일: {sessionStorage.getItem("email")}</div>
-                      <div>성별: {sessionStorage.getItem("gender")}</div>
-                      <div>출생년도: {sessionStorage.getItem("birthYear")}</div>
-                      <div>연령대: {sessionStorage.getItem("age")}</div>
-                      <div>금융대사량 타입: {sessionStorage.getItem("financialType")}</div>
-                      <div>목표 갯수: {sessionStorage.getItem("goalCnt")}</div>
-                      <div>목표 달성률: {sessionStorage.getItem("achievementRate")}</div>
-                      <div>현재까지 모은 금액: {100}</div>
-                    </Col>
-                    <Col lg="4">
+                    <Col lg="3">
                       <div>
                         결혼 유무: {survey["married"] === 1 ? "기혼" : "미혼"}{" "}
                       </div>
                       <div>월 소득: {survey["monthlyIncome"]}만원</div>
                       <div>직종 : {survey["occupation"]}</div>
                     </Col>
-                    <Col lg="4">
-                      <div>소비: {bfr["consumption"]}</div>
-                      <div>예적금: {bfr["deposit"]}</div>
-                      <div>투자(주식, 코인): {bfr["invest"]}</div>
-                      <div>고정비용(보험,세금): {bfr["fixedCost"]}</div>
-                      <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                        Show more
-                      </a>
+                    <Col lg="9">
+                      <BFRChart />
                     </Col>
                   </Row>
                 </div>
               </div>
-              <BFRChart />
             </Card>
           </Container>
         </section>
