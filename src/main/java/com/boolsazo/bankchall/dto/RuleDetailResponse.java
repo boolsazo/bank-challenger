@@ -2,13 +2,14 @@ package com.boolsazo.bankchall.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
-import java.util.Optional;
+import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
 public class RuleDetailResponse {
+    @Getter
     @Setter
     public static class AccountInfo {
         private String accountNo;
@@ -20,14 +21,15 @@ public class RuleDetailResponse {
         }
     }
 
+    @Getter
     @Setter
-    public class SavingHistory {
-        private int amount;
-        private LocalDateTime createdDate;
+    public static class SavingHistory {
+        private int savingAmount;
+        private LocalDateTime savingDate;
 
-        public SavingHistory(int amount, LocalDateTime createdDate) {
-            this.amount = amount;
-            this.createdDate = createdDate;
+        public SavingHistory(int savingAmount, LocalDateTime savingDate) {
+            this.savingAmount = savingAmount;
+            this.savingDate = savingDate;
         }
     }
 
@@ -44,5 +46,5 @@ public class RuleDetailResponse {
     private AccountInfo savingInfo;
 
     @Schema(description = "계좌 입금 내역")
-    private Optional<SavingHistory> savingHistory;
+    private List<SavingHistory> savingHistory;
 }

@@ -3,14 +3,17 @@ package com.boolsazo.bankchall.service.impl;
 import com.boolsazo.bankchall.domain.Goal;
 import com.boolsazo.bankchall.domain.GoalAccount;
 import com.boolsazo.bankchall.dto.RuleDetailResponse;
+import com.boolsazo.bankchall.dto.RuleDetailResponse.SavingHistory;
 import com.boolsazo.bankchall.dto.RuleRequestDto;
 import com.boolsazo.bankchall.dto.resultSet.GoalAccountResultSet;
+import com.boolsazo.bankchall.dto.resultSet.SavingHistoryResultSet;
 import com.boolsazo.bankchall.repository.GoalAccountRepository;
 import com.boolsazo.bankchall.repository.GoalRepository;
 import com.boolsazo.bankchall.repository.SavingHistoryRepository;
 import com.boolsazo.bankchall.service.RuleService;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -70,32 +73,34 @@ public class RuleServiceImpl implements RuleService {
 
     @Override
     public RuleDetailResponse showRule(int goalId) {
-        GoalAccount account = goalAccountRepository.findByGoalId(goalId).orElseThrow(
-            () -> new NoSuchElementException("존재하는 규칙이 없습니다."));
+        if (goalAccountRepository.findByGoalId(goalId).isEmpty()) {
+            throw new NoSuchElementException("존재하는 규칙이 없습니다.");
+        }
 
         RuleDetailResponse result = new RuleDetailResponse();
 
         GoalAccountResultSet goalWAccount = goalAccountRepository.showGoalWAccount(goalId);
-        RuleDetailResponse.AccountInfo withdrawInfo = new RuleDetailResponse.AccountInfo(
-            goalWAccount.getAccount_Num_Masked(),
-            goalWAccount.getBank_Name());
 
         GoalAccountResultSet goalSAccount = goalAccountRepository.showGoalSAccount(goalId);
-        RuleDetailResponse.AccountInfo savingsInfo = new RuleDetailResponse.AccountInfo(
+
+        result.setWithdrawInfo(new RuleDetailResponse.AccountInfo(
+            goalWAccount.getAccount_Num_Masked(),
+            goalWAccount.getBank_Name()));
+
+        result.setSavingInfo(new RuleDetailResponse.AccountInfo(
             goalSAccount.getAccount_Num_Masked(),
-            goalSAccount.getBank_Name());
+            goalSAccount.getBank_Name()));
 
-        result.setWithdrawInfo(withdrawInfo);
-        result.setSavingInfo(savingsInfo);
+        List<SavingHistory> savingHistoryList = new ArrayList<>();
+        List<SavingHistoryResultSet> resultSetList = savingHistoryRepository.showAllByGoalId(
+            goalId);
 
-        Optional<RuleDetailResponse.SavingHistory> savingHistories = savingHistoryRepository.findById(
-                goalId)
-                                                                         .map(
-                                                                             sh -> new RuleDetailResponse().new SavingHistory(
-                                                                                 sh.getSavingAmount(),
-                                                                                 sh.getSavingDate()));
+        for (SavingHistoryResultSet resultSet : resultSetList) {
+            savingHistoryList.add(
+                new SavingHistory(resultSet.getSaving_Amount(), resultSet.getSaving_Date()));
+        }
 
-        result.setSavingHistory(savingHistories);
+        result.setSavingHistory(savingHistoryList);
         return result;
     }
 }
