@@ -98,6 +98,26 @@ const bfrData = {
   },
 }
 
+const job = {
+  "inoccupation": 0,
+  "student": 0,
+  "employee": 0,
+  "ownerOperator": 0,
+  "specializedJob": 0,
+  "freelancer": 0,
+  "civilServant": 0,
+  "engineer": 0,
+  "service": 0
+}
+
+const goal = {
+  "buy": 0,
+  "go": 0,
+  "collect": 0
+}
+
+const result = []
+
 class Login extends React.Component {
   componentDidMount() {
     document.documentElement.scrollTop = 0;
