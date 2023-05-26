@@ -46,15 +46,18 @@ function App() {
       .catch((error) => console.log(error));
   };
 
-  if (sessionStorage.getItem("userId") !== null) {
+  if (sessionStorage.getItem("userId") === null) {
+    // 로그인은 되었으나 세션 정보가 없는 경우, 세션 갱신
+    if (login === true) {
+      setSession();
+    }
+  } else {
     // 로그아웃 상태이나 세션 정보가 남아 있는 경우, 세션 제거
     if (login === false) {
       sessionStorage.clear();
     } else {
       setSession();
     }
-  } else {
-    setSession();
   }
 
   return (
