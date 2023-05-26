@@ -128,7 +128,7 @@ function Survey() {
     return result.join("");
   }
 
-  if (userId === null) {
+  if (userId === null || sessionStorage.getItem("financialType") !== "null") {
     window.location.href = "/";
   } else if (financialType !== "null") {
     window.location.href = "/";
@@ -199,7 +199,7 @@ function Survey() {
                 </RadioGroup>
               </FormGroup>
               <FormGroup controlId="monthlyIncome" sx={{ margin: 2 }}>
-                <FormLabel>월 소득(만 원)</FormLabel>
+                <FormLabel>월 소득(단위: 만 원)</FormLabel>
                 <Input
                   value={monthlyIncome}
                   onChange={handleChangeMonthlyIncome}
@@ -240,7 +240,7 @@ function Survey() {
                 </Select>
               </FormGroup>
               <FormGroup controlId="savings" sx={{ margin: 2 }}>
-                <FormLabel>예적금 현황(만 원)</FormLabel>
+                <FormLabel>예적금 현황(단위: 만 원)</FormLabel>
                 <Input
                   value={savings}
                   onChange={handleChangeSavings}
@@ -250,7 +250,7 @@ function Survey() {
               </FormGroup>
               <div></div>
               <FormGroup controlId="loan" sx={{ margin: 2 }}>
-                <FormLabel>대출금 현황(만 원)</FormLabel>
+                <FormLabel>대출금 현황(단위: 만 원)</FormLabel>
                 <Input
                   value={loan}
                   onChange={handleChangeLoan}
