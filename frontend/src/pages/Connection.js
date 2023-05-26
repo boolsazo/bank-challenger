@@ -30,10 +30,11 @@ const handleNext = () => {
     };
 
     return (
-        <div className="connection" style={{ borderRadius: "40px" }}>
+
             {showRegisterRule ? (
                 <RegisterRule />
             ) : (
+                <div className="connection" style={{ borderRadius: "40px" }}>
                 <>
                     <Typography style={{ fontSize: "20px", fontWeight: "normal" }}>
                         목표가 생성 되었어요!
@@ -59,6 +60,7 @@ const handleNext = () => {
                         </div>
                     )}
                 </>
+                </div>
             )}
         </div>
     );
