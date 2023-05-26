@@ -76,20 +76,9 @@ public class RuleServiceImpl implements RuleService {
         if (goalAccountRepository.findByGoalId(goalId).isEmpty()) {
             throw new NoSuchElementException("존재하는 규칙이 없습니다.");
         }
-
-        RuleDetailResponse result = new RuleDetailResponse();
-
         GoalAccountResultSet goalWAccount = goalAccountRepository.showGoalWAccount(goalId);
 
         GoalAccountResultSet goalSAccount = goalAccountRepository.showGoalSAccount(goalId);
-
-        result.setWithdrawInfo(new RuleDetailResponse.AccountInfo(
-            goalWAccount.getAccount_Num_Masked(),
-            goalWAccount.getBank_Name()));
-
-        result.setSavingInfo(new RuleDetailResponse.AccountInfo(
-            goalSAccount.getAccount_Num_Masked(),
-            goalSAccount.getBank_Name()));
 
         List<SavingHistory> savingHistoryList = new ArrayList<>();
         List<SavingHistoryResultSet> resultSetList = savingHistoryRepository.showAllByGoalId(
@@ -100,7 +89,17 @@ public class RuleServiceImpl implements RuleService {
                 new SavingHistory(resultSet.getSaving_Amount(), resultSet.getSaving_Date()));
         }
 
-        result.setSavingHistory(savingHistoryList);
+        RuleDetailResponse result = RuleDetailResponse.builder()
+                                        .goalId(goalId)
+                                        .withdrawInfo(new RuleDetailResponse.AccountInfo(
+                                            goalWAccount.getAccount_Num_Masked(),
+                                            goalWAccount.getBank_Name()))
+                                        .savingInfo(new RuleDetailResponse.AccountInfo(
+                                            goalSAccount.getAccount_Num_Masked(),
+                                            goalSAccount.getBank_Name()))
+                                        .savingHistory(savingHistoryList)
+                                        .build();
+
         return result;
     }
 }

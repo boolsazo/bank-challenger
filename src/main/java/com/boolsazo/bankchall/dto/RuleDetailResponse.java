@@ -3,9 +3,11 @@ package com.boolsazo.bankchall.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
 import java.util.List;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+@Builder
 @Getter
 @Setter
 public class RuleDetailResponse {
@@ -32,12 +34,8 @@ public class RuleDetailResponse {
             this.savingDate = savingDate;
         }
     }
-
-    @Schema(description = "사용자 ID")
-    private int userId;
-
     @Schema(description = "규칙에 추가된 해당 목표 pk")
-    private String goalId;
+    private int goalId;
 
     @Schema(description = "출금 계좌 정보")
     private AccountInfo withdrawInfo;
