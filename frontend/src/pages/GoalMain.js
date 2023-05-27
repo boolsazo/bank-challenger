@@ -10,40 +10,46 @@ import GoalFirstMain from "./GoalFirstMain";
 import { Button, Card } from "reactstrap";
 import "./CreateGoal.css";
 import RegisterRule from "./RegisterRule";
-import { Link } from 'react-router-dom';
-import {
-  Box
-} from "@mui/material";
+import { Box, Stack } from "@mui/material";
+import { Progress, Col } from "reactstrap";
+import { Scrollbars } from "react-custom-scrollbars";
 
 function GoalMain({ userId }) {
-    const [showCreateGoal, setShowCreateGoal] = useState(false);
-    const [showGoalDetail, setShowGoalDetail] = useState(false);
-    const [showRule, setShowRule] = useState(false);
-    const [selectedGoal, setSelectedGoal] = useState(null);
-    const [goals, setGoals] = useState([]);
-    const [selectedGoalId, setSelectedGoalId] = useState('');
+  if (userId === null) {
+    window.location.href = "/";
+  }
+  const [showCreateGoal, setShowCreateGoal] = useState(false);
+  const [showGoalDetail, setShowGoalDetail] = useState(false);
+  const [showRule, setShowRule] = useState(false);
+  const [selectedGoal, setSelectedGoal] = useState(null);
+  const [goals, setGoals] = useState([]);
+  const [selectedGoalId, setSelectedGoalId] = useState("");
+  const [percentMap, setPercentMap] = useState();
 
-    const updateGoals = () => {
-        axios
-            .get(`/goal/list/${userId}`)
-            .then((res) => {
-                setGoals(res.data.goals);
-            })
-            .catch((err) => {
-                console.error(err);
-            });
-    };
+  const updateGoals = () => {
+    axios
+      .get(`/goal/list/${userId}`)
+      .then((res) => {
+        setGoals(res.data.goals);
+        setPercentMap(res.data.percentMap);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
 
-    useEffect(() => {
-        axios
-            .get(`/goal/list/${userId}`)
-            .then((res) => {
-                setGoals(res.data.goals);
-            })
-            .catch((err) => {
-                console.error(err);
-            });
-    }, [userId]);
+  useEffect(() => {
+    axios
+      .get(`/goal/list/${userId}`)
+      .then((res) => {
+        setGoals(res.data.goals);
+        setPercentMap(res.data.percentMap);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, [userId]);
+
 
     const handleSlideClick = (goalId) => {
         axios
@@ -70,8 +76,13 @@ function GoalMain({ userId }) {
 
     const handleCreateGoalClick = () => {
         setShowCreateGoal(true);
+    }
+    
+  const handleAddRule = (goal) => {
+    setSelectedGoal(goal);
+    setShowRule(true);
+  };
 
-    };
 
         // if (goals.length === 0) {
         //     return (
@@ -98,15 +109,119 @@ function GoalMain({ userId }) {
             updateGoals();
         };
 
-        const handleAddRule = (goal) => {
-            //setSelectedGoalId(goalId);
-            setSelectedGoal(goal);
-            setShowRule(true);
-        };
 
-        const handleRuleClose = () => {
-            setShowRule(false);
-        };
+  const handleGoalDeleteClick = (goalId) => {
+		const confirmDelete = window.confirm("정말 삭제하시겠습니까?");
+		if (confirmDelete) {
+			axios
+				.delete(`/goal/${goalId}`)
+				.then((res) => {
+					console.log("Goal deleted successfully");
+					handleGoalDetailClose(); // 삭제 후 창 닫기
+				})
+				.catch((err) => {
+					console.error(err);
+				});
+		}
+	};
+
+  console.log(goals.percentMap);
+
+  return (
+    <div className="container mukho">
+      <Slider
+        dots={true}
+        infinite={false}
+        speed={500}
+        slidesToShow={3}
+        slidesToScroll={1}
+        centerPadding="20px"
+        arrows={true}
+      >
+        {goals.map((goal) => (
+          <Card className="muk d-flex justify-content-center align-items-center">
+            <div
+              className="slide"
+              onClick={() => handleSlideClick(goal.goalId)}
+              onMouseEnter={handleSlideMouseEnter}
+              onMouseLeave={handleSlideMouseLeave}
+              key={goal.goalId}
+            >
+              <div
+                className="bookmark"
+                style={{ backgroundColor: goal.goalImage }}
+              />
+              <h3>{goal.goalName}</h3>
+              <h2>{goal.goalAmount}</h2>
+              <h2>{goal.startDate}</h2>
+            </div>
+            {goal.day === "null" && (
+              <Button
+                className="ho"
+                onClick={() => handleAddRule(goal)}
+                style={{
+                  width: "60%",
+                  justifyContent: "center",
+                }}
+              >
+                규칙 추가
+              </Button>
+            )}
+            {goal.day !== "null" && (
+              <div
+                style={{
+                  width: "175%",
+                  justifyContent: "center",
+                  display: "flex",
+                }}
+              >
+                <Col lg="5">
+                  <div className="progress-wrapper ho2">
+                    <div className="progress-info">
+                      <div className="progress-label">
+                        <span style={{ color: "white", fontSize: "14px" }}>
+                          진행도
+                        </span>
+                      </div>
+                      <div className="progress-percentage">
+                        <span style={{ color: "white" }}>
+                          {percentMap[goal.goalId]}%
+                        </span>
+                      </div>
+                    </div>
+                    <Progress
+                      max="100"
+                      value={percentMap[goal.goalId]}
+                      color="green"
+                    />
+                  </div>
+                </Col>
+              </div>
+            )}
+          </Card>
+        ))}
+      </Slider>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          marginTop: "50px",
+        }}
+      >
+        <Button
+          color="primary"
+          onClick={handleCreateGoalClick}
+          onMouseEnter={handleSlideMouseEnter}
+          onMouseLeave={handleSlideMouseLeave}
+          style={{
+            width: "33%",
+            backgroundColor: "#7691F6",
+            border: "0",
+          }}
+        >
+          목표 생성
+        </Button>
+      </div>
 
         return (
             <div className="container mukho">
@@ -203,20 +318,91 @@ function GoalMain({ userId }) {
                     </div>
                 )}
 
-                {showCreateGoal && (
-                    <div
-                        style={{
-                            position: "fixed",
-                            top: 0,
-                            bottom: 0,
-                            left: 0,
-                            right: 0,
-                            backgroundColor: "rgba(0, 0, 0, 0.7)",
-                            zIndex: 999,
-                        }}
-                        onClick={() => setShowCreateGoal(false)}
-                    />
-                )}
+
+
+      {showGoalDetail && selectedGoal && (
+        <div className="modal-outer">
+          <div
+            style={{
+              position: "fixed",
+							top: "50%",
+							left: "50%",
+							transform: "translate(-50%, -50%)",
+							backgroundColor: "white",
+							padding: "1em",
+							zIndex: 1000,
+							width: "50%",
+							height: "75%",
+							borderRadius: "10px",
+            }}
+          >
+            <Box sx={{ width: "100%", height: "95%" }}>
+							<Scrollbars
+								thumbSize={85}
+								renderTrackVertical={({ style, ...props }) => {
+									return (
+										<div
+											{...props}
+											className="track-vertical"
+											style={{
+												...style,
+												borderRadius: "3px",
+											}}
+										/>
+									);
+								}}
+								renderThumbHorizontal={(props) => (
+									<div
+										{...props}
+										className="thumb-horizontal"
+									/>
+								)}
+								renderThumbVertical={(props) => (
+									<div
+										{...props}
+										className="thumb-vertical"
+									/>
+								)}
+								renderView={(props) => (
+									<div {...props} className="view" />
+								)}
+							>
+								<GoalDetail
+									goal={selectedGoal}
+									goalId={selectedGoal.goalId}
+									onClose={handleGoalDetailClose}
+								/>
+								<Stack
+									direction="row"
+									spacing={1}
+									justifyContent="flex-end"
+									alignItems="flex-start"
+								>
+									<Button
+										variant="contained"
+										onClick={() =>
+											handleAddRule(selectedGoal)
+										}
+									>
+										목표 수정
+									</Button>
+									<Button
+										variant="contained"
+										onClick={() =>
+											handleGoalDeleteClick(
+												selectedGoal.goalId
+											)
+										}
+									>
+										목표 삭제
+									</Button>
+								</Stack>
+							</Scrollbars>
+						</Box>
+          </div>
+        </div>
+      )}
+
 
                 {showGoalDetail && selectedGoal && (
                     <div className="modal-outer">
@@ -245,58 +431,68 @@ function GoalMain({ userId }) {
                     </div>
                 )}
 
-                {showGoalDetail && (
-                    <div
-                        style={{
-                            position: "fixed",
-                            top: 0,
-                            bottom: 0,
-                            left: 0,
-                            right: 0,
-                            backgroundColor: "rgba(0, 0, 0, 0.7)",
-                            zIndex: 999,
-                        }}
-                        onClick={handleGoalDetailClose}
-                    />
-                )}
 
-                {showRule && (
-                    <div
-                        style={{
-                            position: "fixed",
-                            top: "50%",
-                            left: "50%",
-                            transform: "translate(-50%, -50%)",
-                            backgroundColor: "white",
-                            padding: "1em",
-                            zIndex: 1000,
-                        }}
-                    >
-                        <RegisterRule
-                            goal={selectedGoal}
-                            onClose={handleRuleClose}
-                        />
-                        <button onClick={handleRuleClose}>Close</button>
-                    </div>
-                )}
+      {showRule && (
+        <div
+          style={{
+            position: "fixed",
+						top: "50%",
+						left: "50%",
+						transform: "translate(-50%, -50%)",
+						backgroundColor: "white",
+						padding: "1em",
+						zIndex: 1000,
+						width: "50%",
+						height: "90%",
+						borderRadius: "10px",
+          }}
+        >
+          <Scrollbars
+						thumbSize={85}
+						renderTrackVertical={({ style, ...props }) => {
+							return (
+								<div
+									{...props}
+									className="track-vertical"
+									style={{ ...style, borderRadius: "3px" }}
+								/>
+							);
+						}}
+						renderThumbHorizontal={(props) => (
+							<div {...props} className="thumb-horizontal" />
+						)}
+						renderThumbVertical={(props) => (
+							<div {...props} className="thumb-vertical" />
+						)}
+						renderView={(props) => (
+							<div {...props} className="view" />
+						)}
+					>
+						<RegisterRule
+							goal={selectedGoal}
+							onClose={handleRuleClose}
+						/>
+					</Scrollbars>
+        </div>
+      )}
 
-                {showRule && (
-                    <div
-                        style={{
-                            position: "fixed",
-                            top: 0,
-                            bottom: 0,
-                            left: 0,
-                            right: 0,
-                            backgroundColor: "rgba(0, 0, 0, 0.7)",
-                            zIndex: 999,
-                        }}
-                        onClick={handleRuleClose}
-                    />
-                )}
+      {showRule && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            backgroundColor: "rgba(0, 0, 0, 0.7)",
+            zIndex: 999,
+          }}
+          onClick={handleRuleClose}
+        />
+      )}
+    </div>
+  );
+}
 
-            </div>
-        );
-    }
 
 export default GoalMain;

@@ -9,7 +9,7 @@ import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 
 const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+  backgroundColor: theme.palette.mode === "dark" ? "#1ffA2027" : "#768FF4",
   ...theme.typography.body2,
   padding: theme.spacing(1),
   textAlign: "center",
@@ -109,8 +109,8 @@ export default function RowAndColumnSpacing(props) {
     if (index === 8) {
       setFlag(true);
     } else {
-      console.log('???')
-      console.log(index)
+      // console.log('???')
+      // console.log(index)
       setIndex((cur) => cur + 1);
     }
   };
@@ -150,10 +150,11 @@ export default function RowAndColumnSpacing(props) {
                     }}
                     sx={{
                       height: "50%",
+                      color:"white",
                       "&:hover": {
                         cursor: "pointer",
                         color: "white",
-                        backgroundColor: "text.disabled",
+                        backgroundColor: "",
                         opacity: [0.9, 0.8, 0.7],
                       },
                     }}
@@ -172,10 +173,11 @@ export default function RowAndColumnSpacing(props) {
                     }}
                     sx={{
                       height: "50%",
+                      color:"white",
                       "&:hover": {
                         cursor: "pointer",
                         color: "white",
-                        backgroundColor: "text.disabled",
+                        backgroundColor: "",
                         opacity: [0.9, 0.8, 0.7],
                       },
                     }}
