@@ -10,7 +10,6 @@ import GoalFirstMain from "./GoalFirstMain";
 import { Button, Card } from "reactstrap";
 import "./CreateGoal.css";
 import RegisterRule from "./RegisterRule";
-
 import { Box } from "@mui/material";
 
 function GoalMain({ userId }) {
@@ -81,9 +80,9 @@ function GoalMain({ userId }) {
     updateGoals();
   };
 
-  const handleAddRule = (goalId) => {
-    alert(goalId);
-    setSelectedGoalId(goalId);
+  const handleAddRule = (goal) => {
+    //setSelectedGoalId(goalId);
+    setSelectedGoal(goal);
     setShowRule(true);
   };
 
@@ -121,7 +120,7 @@ function GoalMain({ userId }) {
             </div>
             <Button
               className="add-rule"
-              onClick={() => handleAddRule(goal.goalId)}
+              onClick={() => handleAddRule(goal)}
               style={{
                 width: "60%",
                 justifyContent: "center",
@@ -254,7 +253,10 @@ function GoalMain({ userId }) {
             zIndex: 1000,
           }}
         >
-          <RegisterRule goalId={selectedGoalId} onClose={handleRuleClose} />
+          <RegisterRule
+            goal={selectedGoal}
+            onClose={handleRuleClose}
+          />
           <button onClick={handleRuleClose}>Close</button>
         </div>
       )}
