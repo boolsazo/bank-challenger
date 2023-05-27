@@ -10,9 +10,8 @@ import GoalFirstMain from "./GoalFirstMain";
 import { Button, Card } from "reactstrap";
 import "./CreateGoal.css";
 import RegisterRule from "./RegisterRule";
-import {
-  Box
-} from "@mui/material";
+import { Box } from "@mui/material";
+import { Progress, Col } from "reactstrap";
 
 function GoalMain({ userId }) {
   const [showCreateGoal, setShowCreateGoal] = useState(false);
@@ -20,13 +19,15 @@ function GoalMain({ userId }) {
   const [showRule, setShowRule] = useState(false);
   const [selectedGoal, setSelectedGoal] = useState(null);
   const [goals, setGoals] = useState([]);
-  const [selectedGoalId, setSelectedGoalId] = useState('');
+  const [selectedGoalId, setSelectedGoalId] = useState("");
+  const [percentMap, setPercentMap] = useState();
 
   const updateGoals = () => {
     axios
       .get(`/goal/list/${userId}`)
       .then((res) => {
         setGoals(res.data.goals);
+        setPercentMap(res.data.percentMap);
       })
       .catch((err) => {
         console.error(err);
@@ -38,6 +39,7 @@ function GoalMain({ userId }) {
       .get(`/goal/list/${userId}`)
       .then((res) => {
         setGoals(res.data.goals);
+        setPercentMap(res.data.percentMap);
       })
       .catch((err) => {
         console.error(err);
@@ -88,7 +90,7 @@ function GoalMain({ userId }) {
   const handleRuleClose = () => {
     setShowRule(false);
   };
-
+  console.log(goals.percentMap);
   return (
     <div className="container mukho">
       <Slider
@@ -117,16 +119,49 @@ function GoalMain({ userId }) {
               <h2>{goal.goalAmount}</h2>
               <h2>{goal.startDate}</h2>
             </div>
-            <Button
-              className="add-rule"
-              onClick={() => handleAddRule(goal)}
-              style={{
-                width: "60%",
-                justifyContent: "center",
-              }}
-            >
-              규칙 추가
-            </Button>
+            {goal.day === "null" && (
+              <Button
+                className="ho"
+                onClick={() => handleAddRule(goal)}
+                style={{
+                  width: "60%",
+                  justifyContent: "center",
+                }}
+              >
+                규칙 추가
+              </Button>
+            )}
+            {goal.day !== "null" && (
+              <div
+                style={{
+                  width: "175%",
+                  justifyContent: "center",
+                  display: "flex",
+                }}
+              >
+                <Col lg="5">
+                  <div className="progress-wrapper ho2">
+                    <div className="progress-info">
+                      <div className="progress-label">
+                        <span style={{ color: "white", fontSize: "14px" }}>
+                          진행도
+                        </span>
+                      </div>
+                      <div className="progress-percentage">
+                        <span style={{ color: "white" }}>
+                          {percentMap[goal.goalId]}%
+                        </span>
+                      </div>
+                    </div>
+                    <Progress
+                      max="100"
+                      value={percentMap[goal.goalId]}
+                      color="green"
+                    />
+                  </div>
+                </Col>
+              </div>
+            )}
           </Card>
         ))}
       </Slider>
@@ -200,28 +235,28 @@ function GoalMain({ userId }) {
 
       {showGoalDetail && selectedGoal && (
         <div className="modal-outer">
-        <div
-          className="modal-body"
-          style={{
-            position: "fixed",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            backgroundColor: "white",
-            padding: "1em",
-            zIndex: 1000,
-            width: "50%",
-            height:"75%",
-          }}
-        >
-        <Box sx={{ width: "100%", height:"95%"}}>
-          <GoalDetail
-            goal={selectedGoal}
-            goalId={selectedGoal.goalId}
-            onClose={handleGoalDetailClose}
-          />
-          </Box>
-        </div>
+          <div
+            className="modal-body"
+            style={{
+              position: "fixed",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              backgroundColor: "white",
+              padding: "1em",
+              zIndex: 1000,
+              width: "50%",
+              height: "75%",
+            }}
+          >
+            <Box sx={{ width: "100%", height: "95%" }}>
+              <GoalDetail
+                goal={selectedGoal}
+                goalId={selectedGoal.goalId}
+                onClose={handleGoalDetailClose}
+              />
+            </Box>
+          </div>
         </div>
       )}
 
@@ -252,10 +287,7 @@ function GoalMain({ userId }) {
             zIndex: 1000,
           }}
         >
-          <RegisterRule
-            goal={selectedGoal}
-            onClose={handleRuleClose}
-          />
+          <RegisterRule goal={selectedGoal} onClose={handleRuleClose} />
           <button onClick={handleRuleClose}>Close</button>
         </div>
       )}
@@ -274,7 +306,6 @@ function GoalMain({ userId }) {
           onClick={handleRuleClose}
         />
       )}
-
     </div>
   );
 }
