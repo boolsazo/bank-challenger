@@ -62,7 +62,7 @@
   border: 2px solid #000000;
 }
 
-.add-rule {
+.ho {
   top: -150px;
 }
 
@@ -111,3 +111,18 @@
   margin-right: -15px;
   margin-bottom: -17px !important; 
 }
+
+.ho2 {
+  top: -175px;
+}
+
+.modal-body {
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+}
+
+.modal-outer {
+  overflow: hidden;
+  border-radius: 15px;
+}
+

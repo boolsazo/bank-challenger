@@ -11,83 +11,90 @@ import { Button, Card } from "reactstrap";
 import "./CreateGoal.css";
 import RegisterRule from "./RegisterRule";
 import { Box, Stack } from "@mui/material";
+import { Progress, Col } from "reactstrap";
 import { Scrollbars } from "react-custom-scrollbars";
 
 function GoalMain({ userId }) {
-	const [showCreateGoal, setShowCreateGoal] = useState(false);
-	const [showGoalDetail, setShowGoalDetail] = useState(false);
-	const [showRule, setShowRule] = useState(false);
-	const [selectedGoal, setSelectedGoal] = useState(null);
-	const [goals, setGoals] = useState([]);
-	const [selectedGoalId, setSelectedGoalId] = useState("");
+  if (userId === null) {
+    window.location.href = "/";
+  }
+  const [showCreateGoal, setShowCreateGoal] = useState(false);
+  const [showGoalDetail, setShowGoalDetail] = useState(false);
+  const [showRule, setShowRule] = useState(false);
+  const [selectedGoal, setSelectedGoal] = useState(null);
+  const [goals, setGoals] = useState([]);
+  const [selectedGoalId, setSelectedGoalId] = useState("");
+  const [percentMap, setPercentMap] = useState();
 
-	const updateGoals = () => {
-		axios
-			.get(`/goal/list/${userId}`)
-			.then((res) => {
-				setGoals(res.data.goals);
-			})
-			.catch((err) => {
-				console.error(err);
-			});
-	};
+  const updateGoals = () => {
+    axios
+      .get(`/goal/list/${userId}`)
+      .then((res) => {
+        setGoals(res.data.goals);
+        setPercentMap(res.data.percentMap);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
 
-	useEffect(() => {
-		axios
-			.get(`/goal/list/${userId}`)
-			.then((res) => {
-				setGoals(res.data.goals);
-			})
-			.catch((err) => {
-				console.error(err);
-			});
-	}, [userId]);
+  useEffect(() => {
+    axios
+      .get(`/goal/list/${userId}`)
+      .then((res) => {
+        setGoals(res.data.goals);
+        setPercentMap(res.data.percentMap);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, [userId]);
 
-	if (goals.length === 0) {
-		return <GoalFirstMain />;
-	}
-	const handleSlideClick = (goalId) => {
-		axios
-			.get(`/goal/detail/${goalId}`)
-			.then((res) => {
-				setSelectedGoal(res.data);
-				setShowGoalDetail(true);
-			})
-			.catch((err) => {
-				console.error(err);
-			});
-	};
+  if (goals.length === 0) {
+    return <GoalFirstMain />;
+  }
+  const handleSlideClick = (goalId) => {
+    axios
+      .get(`/goal/detail/${goalId}`)
+      .then((res) => {
+        setSelectedGoal(res.data);
+        setShowGoalDetail(true);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
 
-	const handleSlideMouseEnter = (e) => {
-		e.currentTarget.style.backgroundColor = "#172b4d";
-		e.currentTarget.style.color = "#f0f0f0";
-	};
+  const handleSlideMouseEnter = (e) => {
+    e.currentTarget.style.backgroundColor = "#172b4d";
+    e.currentTarget.style.color = "#f0f0f0";
+  };
 
-	const handleSlideMouseLeave = (e) => {
-		e.currentTarget.style.backgroundColor = "#7691F6";
-		e.currentTarget.style.color = "#f0f0f0";
-	};
+  const handleSlideMouseLeave = (e) => {
+    e.currentTarget.style.backgroundColor = "#7691F6";
+    e.currentTarget.style.color = "#f0f0f0";
+  };
 
-	const handleCreateGoalClick = () => {
-		setShowCreateGoal(true);
-		updateGoals();
-	};
+  const handleCreateGoalClick = () => {
+    setShowCreateGoal(true);
+    updateGoals();
+  };
 
-	const handleGoalDetailClose = () => {
-		setShowGoalDetail(false);
-		updateGoals();
-	};
+  const handleGoalDetailClose = () => {
+    setShowGoalDetail(false);
+    updateGoals();
+  };
 
-	const handleAddRule = (goal) => {
-		setSelectedGoal(goal);
-		setShowRule(true);
-	};
+  const handleAddRule = (goal) => {
+    setSelectedGoal(goal);
+    setShowRule(true);
+  };
 
-	const handleRuleClose = () => {
-		setShowRule(false);
-	};
+  const handleRuleClose = () => {
+    setShowRule(false);
+  };
 
-	const handleGoalDeleteClick = (goalId) => {
+  const handleGoalDeleteClick = (goalId) => {
 		const confirmDelete = window.confirm("정말 삭제하시겠습니까?");
 		if (confirmDelete) {
 			axios
@@ -102,121 +109,155 @@ function GoalMain({ userId }) {
 		}
 	};
 
-	return (
-		<div className="container mukho">
-			<Slider
-				dots={true}
-				infinite={false}
-				speed={500}
-				slidesToShow={3}
-				slidesToScroll={1}
-				centerPadding="20px"
-				arrows={true}
-			>
-				{goals.map((goal) => (
-					<Card className="muk d-flex justify-content-center align-items-center">
-						<div
-							className="slide"
-							onClick={() => handleSlideClick(goal.goalId)}
-							onMouseEnter={handleSlideMouseEnter}
-							onMouseLeave={handleSlideMouseLeave}
-							key={goal.goalId}
-						>
-							<div
-								className="bookmark"
-								style={{ backgroundColor: goal.goalImage }}
-							/>
-							<h3>{goal.goalName}</h3>
-							<h2>{goal.goalAmount}</h2>
-							<h2>{goal.startDate}</h2>
-						</div>
-						<Button
-							className="add-rule"
-							onClick={() => handleAddRule(goal)}
-							style={{
-								width: "60%",
-								justifyContent: "center",
-							}}
-						>
-							규칙 추가
-						</Button>
-					</Card>
-				))}
-			</Slider>
-			<div
-				style={{
-					display: "flex",
-					justifyContent: "center",
-					marginTop: "50px",
-				}}
-			>
-				<Button
-					color="primary"
-					onClick={handleCreateGoalClick}
-					onMouseEnter={handleSlideMouseEnter}
-					onMouseLeave={handleSlideMouseLeave}
-					style={{
-						width: "33%",
-						backgroundColor: "#7691F6",
-						border: "0",
-					}}
-				>
-					목표 생성
-				</Button>
-			</div>
+  console.log(goals.percentMap);
 
-			{showCreateGoal && (
-				<div
-					style={{
-						position: "fixed",
-						top: "50%",
-						left: "50%",
-						transform: "translate(-50%, -50%)",
-						backgroundColor: "white",
-						padding: "1em",
-						zIndex: 1000,
-						borderRadius: "20px",
-						boxShadow: "0 2px 30px rgba(0, 0, 0, 0.3)",
-					}}
-				>
-					<CreateGoal />
-					<button
-						onClick={() => setShowCreateGoal(false)}
-						style={{
-							fontSize: "12px",
-							borderRadius: "50px",
-							color: "black",
-							position: "fixed",
-							top: 0,
-							left: 0,
-						}}
-					>
-						X
-					</button>
-				</div>
-			)}
+  return (
+    <div className="container mukho">
+      <Slider
+        dots={true}
+        infinite={false}
+        speed={500}
+        slidesToShow={3}
+        slidesToScroll={1}
+        centerPadding="20px"
+        arrows={true}
+      >
+        {goals.map((goal) => (
+          <Card className="muk d-flex justify-content-center align-items-center">
+            <div
+              className="slide"
+              onClick={() => handleSlideClick(goal.goalId)}
+              onMouseEnter={handleSlideMouseEnter}
+              onMouseLeave={handleSlideMouseLeave}
+              key={goal.goalId}
+            >
+              <div
+                className="bookmark"
+                style={{ backgroundColor: goal.goalImage }}
+              />
+              <h3>{goal.goalName}</h3>
+              <h2>{goal.goalAmount}</h2>
+              <h2>{goal.startDate}</h2>
+            </div>
+            {goal.day === "null" && (
+              <Button
+                className="ho"
+                onClick={() => handleAddRule(goal)}
+                style={{
+                  width: "60%",
+                  justifyContent: "center",
+                }}
+              >
+                규칙 추가
+              </Button>
+            )}
+            {goal.day !== "null" && (
+              <div
+                style={{
+                  width: "175%",
+                  justifyContent: "center",
+                  display: "flex",
+                }}
+              >
+                <Col lg="5">
+                  <div className="progress-wrapper ho2">
+                    <div className="progress-info">
+                      <div className="progress-label">
+                        <span style={{ color: "white", fontSize: "14px" }}>
+                          진행도
+                        </span>
+                      </div>
+                      <div className="progress-percentage">
+                        <span style={{ color: "white" }}>
+                          {percentMap[goal.goalId]}%
+                        </span>
+                      </div>
+                    </div>
+                    <Progress
+                      max="100"
+                      value={percentMap[goal.goalId]}
+                      color="green"
+                    />
+                  </div>
+                </Col>
+              </div>
+            )}
+          </Card>
+        ))}
+      </Slider>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          marginTop: "50px",
+        }}
+      >
+        <Button
+          color="primary"
+          onClick={handleCreateGoalClick}
+          onMouseEnter={handleSlideMouseEnter}
+          onMouseLeave={handleSlideMouseLeave}
+          style={{
+            width: "33%",
+            backgroundColor: "#7691F6",
+            border: "0",
+          }}
+        >
+          목표 생성
+        </Button>
+      </div>
 
-			{showCreateGoal && (
-				<div
-					style={{
-						position: "fixed",
-						top: 0,
-						bottom: 0,
-						left: 0,
-						right: 0,
-						backgroundColor: "rgba(0, 0, 0, 0.7)",
-						zIndex: 999,
-					}}
-					onClick={() => setShowCreateGoal(false)}
-				/>
-			)}
+      {showCreateGoal && (
+        <div
+          style={{
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            backgroundColor: "white",
+            padding: "1em",
+            zIndex: 1000,
+            borderRadius: "20px",
+            boxShadow: "0 2px 30px rgba(0, 0, 0, 0.3)",
+          }}
+        >
+          <CreateGoal />
+          <button
+            onClick={() => setShowCreateGoal(false)}
+            style={{
+              fontSize: "12px",
+              borderRadius: "50px",
+              color: "black",
+              position: "fixed",
+              top: 0,
+              left: 0,
+            }}
+          >
+            X
+          </button>
+        </div>
+      )}
 
-			{/* 목표 세부 사항(규칙) 보기 */}
-			{showGoalDetail && selectedGoal && (
-				<div className="modal-outer">
-					<div
-						style={{
-							position: "fixed",
+      {showCreateGoal && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            backgroundColor: "rgba(0, 0, 0, 0.7)",
+            zIndex: 999,
+          }}
+          onClick={() => setShowCreateGoal(false)}
+        />
+      )}
+
+      {showGoalDetail && selectedGoal && (
+        <div className="modal-outer">
+          <div
+            style={{
+              position: "fixed",
 							top: "50%",
 							left: "50%",
 							transform: "translate(-50%, -50%)",
@@ -226,9 +267,9 @@ function GoalMain({ userId }) {
 							width: "50%",
 							height: "75%",
 							borderRadius: "10px",
-						}}
-					>
-						<Box sx={{ width: "100%", height: "95%" }}>
+            }}
+          >
+            <Box sx={{ width: "100%", height: "95%" }}>
 							<Scrollbars
 								thumbSize={85}
 								renderTrackVertical={({ style, ...props }) => {
@@ -291,29 +332,29 @@ function GoalMain({ userId }) {
 								</Stack>
 							</Scrollbars>
 						</Box>
-					</div>
-				</div>
-			)}
+          </div>
+        </div>
+      )}
 
-			{showGoalDetail && (
-				<div
-					style={{
-						position: "fixed",
-						top: 0,
-						bottom: 0,
-						left: 0,
-						right: 0,
-						backgroundColor: "rgba(0, 0, 0, 0.7)",
-						zIndex: 999,
-					}}
-					onClick={handleGoalDetailClose}
-				/>
-			)}
-			{/* 규칙 추가 */}
-			{showRule && (
-				<div
-					style={{
-						position: "fixed",
+      {showGoalDetail && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            backgroundColor: "rgba(0, 0, 0, 0.7)",
+            zIndex: 999,
+          }}
+          onClick={handleGoalDetailClose}
+        />
+      )}
+
+      {showRule && (
+        <div
+          style={{
+            position: "fixed",
 						top: "50%",
 						left: "50%",
 						transform: "translate(-50%, -50%)",
@@ -323,9 +364,9 @@ function GoalMain({ userId }) {
 						width: "50%",
 						height: "90%",
 						borderRadius: "10px",
-					}}
-				>
-					<Scrollbars
+          }}
+        >
+          <Scrollbars
 						thumbSize={85}
 						renderTrackVertical={({ style, ...props }) => {
 							return (
@@ -351,25 +392,25 @@ function GoalMain({ userId }) {
 							onClose={handleRuleClose}
 						/>
 					</Scrollbars>
-				</div>
-			)}
+        </div>
+      )}
 
-			{showRule && (
-				<div
-					style={{
-						position: "fixed",
-						top: 0,
-						bottom: 0,
-						left: 0,
-						right: 0,
-						backgroundColor: "rgba(0, 0, 0, 0.7)",
-						zIndex: 999,
-					}}
-					onClick={handleRuleClose}
-				/>
-			)}
-		</div>
-	);
+      {showRule && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            backgroundColor: "rgba(0, 0, 0, 0.7)",
+            zIndex: 999,
+          }}
+          onClick={handleRuleClose}
+        />
+      )}
+    </div>
+  );
 }
 
 export default GoalMain;
