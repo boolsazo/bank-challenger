@@ -219,7 +219,7 @@ const GoalDetail = ({ goal, goalId, onClose }) => {
 	));
 
 	return (
-		<>
+		<div style={{padding:"1em"}}>
 			<div>
 				<h1>{goalDetail.goalName}</h1>
 				<p style={{ marginTop: "-10px", marginLeft: "50px" }}>
@@ -260,12 +260,12 @@ const GoalDetail = ({ goal, goalId, onClose }) => {
 					>
 						<TableHead>
 							<TableBody></TableBody>
-							<tbody style={{ width: "100%" }}>{tableRows}</tbody>
+							<tbody style={{ width: "100%"}}>{tableRows}</tbody>
 						</TableHead>
 					</Table>
 				</div>
 			</div>
-		</>
+		</div>
 	);
 };
 

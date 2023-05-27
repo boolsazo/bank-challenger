@@ -11,6 +11,7 @@ import { Button, Card } from "reactstrap";
 import "./CreateGoal.css";
 import RegisterRule from "./RegisterRule";
 import { Box, Stack } from "@mui/material";
+import { Scrollbars } from "react-custom-scrollbars";
 
 function GoalMain({ userId }) {
 	const [showCreateGoal, setShowCreateGoal] = useState(false);
@@ -86,7 +87,7 @@ function GoalMain({ userId }) {
 		setShowRule(false);
 	};
 
-  const handleGoalDeleteClick = (goalId) => {
+	const handleGoalDeleteClick = (goalId) => {
 		const confirmDelete = window.confirm("정말 삭제하시겠습니까?");
 		if (confirmDelete) {
 			axios
@@ -210,10 +211,10 @@ function GoalMain({ userId }) {
 				/>
 			)}
 
+			{/* 목표 세부 사항(규칙) 보기 */}
 			{showGoalDetail && selectedGoal && (
 				<div className="modal-outer">
 					<div
-						className="modal-body"
 						style={{
 							position: "fixed",
 							top: "50%",
@@ -224,23 +225,71 @@ function GoalMain({ userId }) {
 							zIndex: 1000,
 							width: "50%",
 							height: "75%",
+							borderRadius: "10px",
 						}}
 					>
 						<Box sx={{ width: "100%", height: "95%" }}>
-							<GoalDetail
-								goal={selectedGoal}
-								goalId={selectedGoal.goalId}
-								onClose={handleGoalDetailClose}
-							/>
-							<Stack
-								direction="row"
-								spacing={1}
-								justifyContent="flex-end"
-								alignItems="flex-start"
+							<Scrollbars
+								thumbSize={85}
+								renderTrackVertical={({ style, ...props }) => {
+									return (
+										<div
+											{...props}
+											className="track-vertical"
+											style={{
+												...style,
+												borderRadius: "3px",
+											}}
+										/>
+									);
+								}}
+								renderThumbHorizontal={(props) => (
+									<div
+										{...props}
+										className="thumb-horizontal"
+									/>
+								)}
+								renderThumbVertical={(props) => (
+									<div
+										{...props}
+										className="thumb-vertical"
+									/>
+								)}
+								renderView={(props) => (
+									<div {...props} className="view" />
+								)}
 							>
-								<Button variant="contained" onClick={() => handleAddRule(selectedGoal)}>목표 수정</Button>
-								<Button variant="contained" onClick={() => handleGoalDeleteClick(selectedGoal.goalId)}>목표 삭제</Button>
-							</Stack>
+								<GoalDetail
+									goal={selectedGoal}
+									goalId={selectedGoal.goalId}
+									onClose={handleGoalDetailClose}
+								/>
+								<Stack
+									direction="row"
+									spacing={1}
+									justifyContent="flex-end"
+									alignItems="flex-start"
+								>
+									<Button
+										variant="contained"
+										onClick={() =>
+											handleAddRule(selectedGoal)
+										}
+									>
+										목표 수정
+									</Button>
+									<Button
+										variant="contained"
+										onClick={() =>
+											handleGoalDeleteClick(
+												selectedGoal.goalId
+											)
+										}
+									>
+										목표 삭제
+									</Button>
+								</Stack>
+							</Scrollbars>
 						</Box>
 					</div>
 				</div>
@@ -260,9 +309,9 @@ function GoalMain({ userId }) {
 					onClick={handleGoalDetailClose}
 				/>
 			)}
-
+			{/* 규칙 추가 */}
 			{showRule && (
-				<div className="modal-body"
+				<div
 					style={{
 						position: "fixed",
 						top: "50%",
@@ -271,12 +320,37 @@ function GoalMain({ userId }) {
 						backgroundColor: "white",
 						padding: "1em",
 						zIndex: 1000,
+						width: "50%",
+						height: "90%",
+						borderRadius: "10px",
 					}}
 				>
-					<RegisterRule
-						goal={selectedGoal}
-						onClose={handleRuleClose}
-					/>
+					<Scrollbars
+						thumbSize={85}
+						renderTrackVertical={({ style, ...props }) => {
+							return (
+								<div
+									{...props}
+									className="track-vertical"
+									style={{ ...style, borderRadius: "3px" }}
+								/>
+							);
+						}}
+						renderThumbHorizontal={(props) => (
+							<div {...props} className="thumb-horizontal" />
+						)}
+						renderThumbVertical={(props) => (
+							<div {...props} className="thumb-vertical" />
+						)}
+						renderView={(props) => (
+							<div {...props} className="view" />
+						)}
+					>
+						<RegisterRule
+							goal={selectedGoal}
+							onClose={handleRuleClose}
+						/>
+					</Scrollbars>
 				</div>
 			)}
 
