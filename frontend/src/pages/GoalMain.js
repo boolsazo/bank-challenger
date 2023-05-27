@@ -14,6 +14,9 @@ import { Box } from "@mui/material";
 import { Progress, Col } from "reactstrap";
 
 function GoalMain({ userId }) {
+  if (userId === null) {
+    window.location.href = "/";
+  }
   const [showCreateGoal, setShowCreateGoal] = useState(false);
   const [showGoalDetail, setShowGoalDetail] = useState(false);
   const [showRule, setShowRule] = useState(false);
