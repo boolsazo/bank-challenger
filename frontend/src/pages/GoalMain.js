@@ -10,6 +10,9 @@ import GoalFirstMain from "./GoalFirstMain";
 import { Button, Card } from "reactstrap";
 import "./CreateGoal.css";
 import RegisterRule from "./RegisterRule";
+import {
+  Box
+} from "@mui/material";
 
 function GoalMain({ userId }) {
   const [showCreateGoal, setShowCreateGoal] = useState(false);
@@ -196,7 +199,9 @@ function GoalMain({ userId }) {
       )}
 
       {showGoalDetail && selectedGoal && (
+        <div className="modal-outer">
         <div
+          className="modal-body"
           style={{
             position: "fixed",
             top: "50%",
@@ -205,14 +210,18 @@ function GoalMain({ userId }) {
             backgroundColor: "white",
             padding: "1em",
             zIndex: 1000,
+            width: "50%",
+            height:"75%",
           }}
         >
+        <Box sx={{ width: "100%", height:"95%"}}>
           <GoalDetail
             goal={selectedGoal}
             goalId={selectedGoal.goalId}
             onClose={handleGoalDetailClose}
           />
-          <button onClick={handleGoalDetailClose}>Close</button>
+          </Box>
+        </div>
         </div>
       )}
 
