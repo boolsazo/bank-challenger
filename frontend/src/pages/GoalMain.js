@@ -11,17 +11,18 @@ import { Button, Card } from "reactstrap";
 import "./CreateGoal.css";
 import RegisterRule from "./RegisterRule";
 
-import {
-  Box
-} from "@mui/material";
+import { Box } from "@mui/material";
 
 function GoalMain({ userId }) {
+  if (userId === null) {
+    window.location.href = "/";
+  }
   const [showCreateGoal, setShowCreateGoal] = useState(false);
   const [showGoalDetail, setShowGoalDetail] = useState(false);
   const [showRule, setShowRule] = useState(false);
   const [selectedGoal, setSelectedGoal] = useState(null);
   const [goals, setGoals] = useState([]);
-  const [selectedGoalId, setSelectedGoalId] = useState('');
+  const [selectedGoalId, setSelectedGoalId] = useState("");
 
   const updateGoals = () => {
     axios
@@ -201,28 +202,28 @@ function GoalMain({ userId }) {
 
       {showGoalDetail && selectedGoal && (
         <div className="modal-outer">
-        <div
-          className="modal-body"
-          style={{
-            position: "fixed",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            backgroundColor: "white",
-            padding: "1em",
-            zIndex: 1000,
-            width: "50%",
-            height:"75%",
-          }}
-        >
-        <Box sx={{ width: "100%", height:"95%"}}>
-          <GoalDetail
-            goal={selectedGoal}
-            goalId={selectedGoal.goalId}
-            onClose={handleGoalDetailClose}
-          />
-          </Box>
-        </div>
+          <div
+            className="modal-body"
+            style={{
+              position: "fixed",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              backgroundColor: "white",
+              padding: "1em",
+              zIndex: 1000,
+              width: "50%",
+              height: "75%",
+            }}
+          >
+            <Box sx={{ width: "100%", height: "95%" }}>
+              <GoalDetail
+                goal={selectedGoal}
+                goalId={selectedGoal.goalId}
+                onClose={handleGoalDetailClose}
+              />
+            </Box>
+          </div>
         </div>
       )}
 
@@ -253,10 +254,7 @@ function GoalMain({ userId }) {
             zIndex: 1000,
           }}
         >
-          <RegisterRule
-            goalId={selectedGoalId}
-            onClose={handleRuleClose}
-          />
+          <RegisterRule goalId={selectedGoalId} onClose={handleRuleClose} />
           <button onClick={handleRuleClose}>Close</button>
         </div>
       )}
@@ -275,7 +273,6 @@ function GoalMain({ userId }) {
           onClick={handleRuleClose}
         />
       )}
-
     </div>
   );
 }
