@@ -79,9 +79,9 @@ function GoalMain({ userId }) {
     updateGoals();
   };
 
-  const handleAddRule = (goalId) => {
-    alert(goalId);
-    setSelectedGoalId(goalId);
+  const handleAddRule = (goal) => {
+    //setSelectedGoalId(goalId);
+    setSelectedGoal(goal);
     setShowRule(true);
   };
 
@@ -119,7 +119,7 @@ function GoalMain({ userId }) {
             </div>
             <Button
               className="add-rule"
-              onClick={() => handleAddRule(goal.goalId)}
+              onClick={() => handleAddRule(goal)}
               style={{
                 width: "60%",
                 justifyContent: "center",
@@ -253,7 +253,7 @@ function GoalMain({ userId }) {
           }}
         >
           <RegisterRule
-            goalId={selectedGoalId}
+            goal={selectedGoal}
             onClose={handleRuleClose}
           />
           <button onClick={handleRuleClose}>Close</button>
