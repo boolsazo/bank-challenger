@@ -290,6 +290,7 @@ function GoalMain({ userId }) {
             width: "33%",
             backgroundColor: "#7691F6",
             border: "0",
+            color: "white",
           }}
         >
           목표 생성
@@ -391,6 +392,7 @@ function GoalMain({ userId }) {
                   spacing={1}
                   justifyContent="flex-end"
                   alignItems="flex-start"
+                  paddingBottom="25px"
                 >
                   <Button
                     variant="contained"
