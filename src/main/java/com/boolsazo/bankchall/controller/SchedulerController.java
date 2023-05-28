@@ -30,21 +30,20 @@ public class SchedulerController {
     @Scheduled(fixedDelay = 1000* 60 * 60 * 24)
     void AutomaticWithdrawal() {
 
-        // 1. 목표 정보 가져오기
         List<Goal> goals = goalService.findByDay(Integer.toString(LocalDate.now().getDayOfMonth()));
 
         for (Goal goal: goals) {
             try {
                 GoalAccountResultSet goalSAccountInfo = goalAccountService.showGoalSAccount(goal.getGoalId());
                 List<SavingHistoryResultSet> resultSet = savingHistoryService.showSavingHistoryReultSet(goalSAccountInfo.getAccount_Id(),goal.getGoalId());
-                boolean AutomaticDebitPayment=false;
-                for(SavingHistoryResultSet savingDay : resultSet){
-                    if(savingDay.getSaving_Date().getMonth()==LocalDate.now().getMonth()) {
-                        AutomaticDebitPayment = true;
+                boolean automaticDebitPayment = false;
+                for (SavingHistoryResultSet savingDay : resultSet) {
+                    if (savingDay.getSaving_Date().getMonth() == LocalDate.now().getMonth()) {
+                        automaticDebitPayment = true;
                         break;
                     }
                 }
-                if(!AutomaticDebitPayment) {
+                if (!automaticDebitPayment) {
                     SavingHistory vo = new SavingHistory(goalSAccountInfo.getAccount_Id(),
                         goal.getGoalId(), goal.getUserId(),
                         LocalDateTime.now(), goal.getSavingAmount());
