@@ -22,11 +22,11 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     @Override
     public StatisticsCategoryResponse goalStatistics(int userId) throws Exception {
-        CategoryResultSet result;
+        List<CategoryResultSet> result;
         try {
             result = userRepository.goalStatistics(userId);
         } catch (Exception e) {
-            throw new Exception("통계 처리 중 에러" , e);
+            throw new Exception("통계 처리 중 에러", e);
         }
 
         return new StatisticsCategoryResponse(result);
@@ -37,10 +37,10 @@ public class StatisticsServiceImpl implements StatisticsService {
         // 연령대
         String[] ageArr = {"0-9", "10-19", "20-29", "30-39", "40-49", "50-59", "60-"};
         List<GenderAge> response = new ArrayList<>();
+
         for (String age : ageArr) {
             StatisticsGenderAgeResponse.GenderAge genderAge = new StatisticsGenderAgeResponse.GenderAge();
             GenderAgeResultSet result = userRepository.genderAgeStatistics(userId, age);
-
             genderAge.setAge(age);
             if (result != null) {
                 if (result.getGender().equals("M")) {
@@ -49,7 +49,6 @@ public class StatisticsServiceImpl implements StatisticsService {
                     genderAge.setWoman(result.getCount());
                 }
             }
-
             response.add(genderAge);
         }
 
@@ -58,13 +57,13 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     @Override
     public StatisticsJobResponse StatisticsJobResponse(int userId) throws Exception {
-        OccupationResultSet result;
+        List<OccupationResultSet> result;
         try {
             result = userRepository.jobStatistics(userId);
         } catch (Exception e) {
-            throw new Exception("통계 처리 중 에러" , e);
+            throw new Exception("통계 처리 중 에러", e);
         }
 
-        return null;
+        return new StatisticsJobResponse(result);
     }
 }

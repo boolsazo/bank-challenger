@@ -5,6 +5,7 @@ import com.boolsazo.bankchall.dto.resultSet.CategoryResultSet;
 import com.boolsazo.bankchall.dto.resultSet.GenderAgeResultSet;
 import com.boolsazo.bankchall.dto.resultSet.GoalAccountResultSet;
 import com.boolsazo.bankchall.dto.resultSet.OccupationResultSet;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -42,18 +43,18 @@ public interface UserRepository extends JpaRepository<User, Integer> {
             + "join goal g on u.user_id = g.user_id\n"
             + "where u.financial_type = (select financial_type from user u where u.user_id = :userId)\n"
             + "group by category", nativeQuery = true)
-    CategoryResultSet goalStatistics(@Param("userId") int userId);
+    List<CategoryResultSet> goalStatistics(@Param("userId") int userId);
 
     @Query(value = "select gender, count(*) count from user u\n"
             + "join goal g on u.user_id = g.user_id\n"
             + "where u.financial_type = (select financial_type from user u where u.user_id = :userId)\n"
-            + "and u.birthyear = :birthYear\n"
+            + "and u.age = :age\n"
             + "group by u.gender", nativeQuery = true)
-    GenderAgeResultSet genderAgeStatistics(@PathVariable("userId") int userId, @PathVariable("birthYear") String birthYear);
+    GenderAgeResultSet genderAgeStatistics(@PathVariable("userId") int userId, @PathVariable("age") String age);
 
     @Query(value = "select occupation, count(*) count from user u\n"
             + "join survey s on u.user_id = s.user_id\n"
             + "where u.financial_type = (select financial_type from user u where u.user_id = :userId)\n"
             + "group by occupation", nativeQuery = true)
-    OccupationResultSet jobStatistics(@PathVariable("userId") int userId);
+    List<OccupationResultSet> jobStatistics(@PathVariable("userId") int userId);
 }

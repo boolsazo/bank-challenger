@@ -1,13 +1,10 @@
 package com.boolsazo.bankchall.repository;
 
-
 import com.boolsazo.bankchall.domain.Goal;
-
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -17,4 +14,10 @@ public interface GoalRepository extends JpaRepository<Goal, Integer> {
     public int countByUserId(int userId);
 
     List<Goal> findByUserId(int userId);
+
+    @Query(value = "SELECT goal_amount FROM goal where goal_id = :goalId", nativeQuery = true)
+    public int findGoalAmountByGoalId(@Param("goalId") int goalId);
+
+    @Query(value = "SELECT * FROM goal WHERE day=DATE_FORMAT(NOW(),'%d')", nativeQuery = true)
+    List<Goal> findByDay(String day);
 }
