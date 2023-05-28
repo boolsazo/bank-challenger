@@ -100,12 +100,13 @@ function GoalFirstMain() {
         <div
           style={{
             position: "fixed",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            backgroundColor: "white",
-            padding: "1em",
-            zIndex: 1000,
+						top: "50%",
+						left: "50%",
+						transform: "translate(-50%, -50%)",
+						backgroundColor: "white",
+						padding: "1em",
+						zIndex: 1000,
+						borderRadius: "10px",
           }}
         >
           <CreateGoal setIsOpen={category} />

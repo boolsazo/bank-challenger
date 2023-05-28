@@ -4,7 +4,6 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./GoalMain.css";
 import GoalDetail from "./GoalDetail";
-import CreateGoal from "./CreateGoal";
 import axios from "axios";
 import GoalFirstMain from "./GoalFirstMain";
 import { Card } from "reactstrap";
@@ -13,7 +12,6 @@ import RegisterRule from "./RegisterRule";
 import { Box, Stack } from "@mui/material";
 import { Progress, Col } from "reactstrap";
 import { Scrollbars } from "react-custom-scrollbars";
-import { Link } from "react-router-dom";
 import { Button, makeStyles } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 
@@ -26,7 +24,6 @@ function GoalMain({ userId }) {
 	const [showRule, setShowRule] = useState(false);
 	const [selectedGoal, setSelectedGoal] = useState(null);
 	const [goals, setGoals] = useState([]);
-	const [selectedGoalId, setSelectedGoalId] = useState("");
 	const [percentMap, setPercentMap] = useState();
 	const useStyles = makeStyles((theme) => ({
 		button: {
@@ -40,7 +37,7 @@ function GoalMain({ userId }) {
 			borderRadius: "30px",
 			color: "white",
 			"&:hover": {
-				backgroundColor: "gray", // 마우스 오버시 회색으로 변경
+				backgroundColor: "gray", 
 				boxShadow: "0 2px 10px rgba(0, 0, 0, 0.3)",
 			},
 		},
@@ -169,8 +166,8 @@ function GoalMain({ userId }) {
 				>
 					<Button
 						color="primary"
-						onClick={handleCreateGoalClick} // 이 함수는 당신의 상황에 맞게 변경하세요
-						onMouseEnter={handleButtonMouseEnter} // 이 함수는 당신의 상황에 맞게 변경하세요
+						onClick={handleCreateGoalClick} 
+						onMouseEnter={handleButtonMouseEnter} 
 						onMouseLeave={handleButtonMouseLeave}
 						className={classes.button}
 					>
@@ -316,8 +313,7 @@ function GoalMain({ userId }) {
 						backgroundColor: "white",
 						padding: "1em",
 						zIndex: 1000,
-						borderRadius: "20px",
-						boxShadow: "0 2px 30px rgba(0, 0, 0, 0.3)",
+						borderRadius: "10px",
 					}}
 				>
 					<GoalFirstMain />
