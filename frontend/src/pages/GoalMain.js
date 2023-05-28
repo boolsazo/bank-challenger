@@ -137,6 +137,26 @@ function GoalMain({ userId }) {
 
   console.log(goals.percentMap);
 
+  function reverseList(list) {
+    let reversed = [];
+    for (let i = list.length - 1; i >= 0; i--) {
+      reversed.push(list[i]);
+    }
+    return reversed;
+  }
+
+  function numberWithCommas(money) {
+    let result = money.toString().split("");
+    result = reverseList(result);
+    for (let i = 0; i < result.length; i++) {
+      if ((i + 1) % 4 === 0 && i !== 0) {
+        result.splice(i, 0, ",");
+      }
+    }
+    result = reverseList(result);
+    return result.join("");
+  }
+
   return (
     <div className="container mukho">
       {goals.length === 0 && (
@@ -199,7 +219,13 @@ function GoalMain({ userId }) {
                 style={{ backgroundColor: goal.goalImage }}
               />
               <h3>{goal.goalName}</h3>
-              <h2>{goal.goalAmount}</h2>
+              <h2
+                style={{
+                  fontSize: "25px",
+                }}
+              >
+                {numberWithCommas(goal.goalAmount)}원
+              </h2>
               <h2>{goal.startDate}</h2>
             </div>
             {(goal.day === "null" || goal.day === "") && (
