@@ -8,7 +8,6 @@ import PieChart from "./PieChart.js";
 import Bar from "./Bar.js";
 import axios from "axios";
 import { useState, useEffect } from "react";
-
 const bfr = sessionStorage.getItem("financialType");
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -19,19 +18,10 @@ const Item = styled(Paper)(({ theme }) => ({
 	color: theme.palette.text.secondary,
 }));
 
-// var job = []
-
-const goal = {
-	buy: 0,
-	go: 0,
-	collect: 0,
-};
-
 var result = [];
 
 export default function Statistics() {
 	const [job, setJob] = useState();
-	const [category, setCategory] = useState();
 	const [bestCategory, setBestCategory] = useState([]);
 	const [bestCategoryMessage, setBestCategoryMessage] = useState("");
 
@@ -39,7 +29,7 @@ export default function Statistics() {
 		axios
 			.get("/statistics/job/" + sessionStorage.getItem("userId"))
 			.then((res) => {
-				console.log("job", res.data);
+				
 				setJob(res.data);
 				// category(res.data);
 				// const list = res.data.bestCategory;
@@ -74,16 +64,21 @@ export default function Statistics() {
 		axios
 			.get("/statistics/goal/" + sessionStorage.getItem("userId"))
 			.then((res) => {
-				setCategory(res.data);
 				const list = res.data.bestCategory;
 				setBestCategory(list);
-				const output = list.map((item, index) => {
-					if (index === list.length - 1) {
-						return item;
-					} else {
-						return item + ", ";
-					}
-				});
+				const output = "";
+				if (list.length > 0) {
+					output = list.map((item, index) => {
+						if (index === list.length - 1) {
+							return item;
+						} else {
+							return item + ", ";
+						}
+					});
+
+				} else {
+					setBestCategory(null);
+				}
 
 				setBestCategoryMessage(output);
 			})
@@ -121,36 +116,40 @@ export default function Statistics() {
 					{/*</h4>*/}
 				</Grid>
 				<br />
-				<Grid item>
-					<h2
-						className="display-3 text-white"
-						style={{ textAlign: "center" }}
-					>
-						목표 통계
-					</h2>
-					<Item>
-						<PieChart category={category} />
-					</Item>
-					<br />
-
-					{bestCategory.length > 1 ? (
-						<h4
-							className="text-white"
+				{bestCategory != null && (
+					<Grid item>
+						<h2
+							className="display-3 text-white"
 							style={{ textAlign: "center" }}
 						>
-							"{bfr}을 가진 사람들은 '{bestCategoryMessage}'
-							목표를 가진 사람이 많네요!"
-						</h4>
-					) : (
-						<h4
-							className="text-white"
-							style={{ textAlign: "center" }}
-						>
-							"{bfr}을 가진 사람들은 '{bestCategory}' 목표를 가진
-							사람이 많네요!"
-						</h4>
-					)}
-				</Grid>
+							목표 통계
+						</h2>
+						<Item>
+							<PieChart />
+						</Item>
+						<br />
+						{bestCategory.length >= 2 && (
+							<h4
+								className="text-white"
+								style={{ textAlign: "center" }}
+							>
+								"{bfr}을 가진 사람들은 '{bestCategoryMessage}'
+								목표를 가진 사람이 많네요!"
+							</h4>
+						)}
+						;
+						{bestCategory.length === 1 && (
+							<h4
+								className="text-white"
+								style={{ textAlign: "center" }}
+							>
+								"{bfr}을 가진 사람들은 '{bestCategory}' 목표를
+								가진 사람이 많네요!"
+							</h4>
+						)}
+						;
+					</Grid>
+				)}
 				<br />
 				<Grid item>
 					<h2
