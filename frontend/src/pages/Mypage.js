@@ -150,7 +150,7 @@ const Profile = () => {
                   </div>
                   <div>
                     <span className="heading">
-                      {numberWithCommas(sessionStorage.getItem("savingAmount"))}원
+                      {sessionStorage.getItem("savingAmount")}
                     </span>
                     <span className="description">현재까지 모은 금액</span>
                   </div>
