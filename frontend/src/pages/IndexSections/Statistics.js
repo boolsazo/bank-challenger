@@ -8,8 +8,6 @@ import PieChart from "./PieChart.js";
 import Bar from "./Bar.js";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import Goal from "./../Goal";
-
 const bfr = sessionStorage.getItem("financialType");
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -19,14 +17,6 @@ const Item = styled(Paper)(({ theme }) => ({
 	textAlign: "center",
 	color: theme.palette.text.secondary,
 }));
-
-// var job = []
-
-const goal = {
-	buy: 0,
-	go: 0,
-	collect: 0,
-};
 
 var result = [];
 
@@ -85,6 +75,7 @@ export default function Statistics() {
 							return item + ", ";
 						}
 					});
+
 				} else {
 					setBestCategory(null);
 				}
