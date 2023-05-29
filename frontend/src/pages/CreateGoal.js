@@ -28,7 +28,6 @@ const theme = createTheme({
 	},
 });
 
-
 // Instantiate axios with a base URL
 const api = axios.create({
 	baseURL: "http://localhost:8080", // Replace this with the actual server URL
@@ -166,368 +165,357 @@ function CreateGoal({ setIsOpen }) {
 	}
 
 	return (
+		<div className="wrap">
+			<h1 style={{ textAlign: "center", margin: "20px 20px" }}>
+				<Typography style={{ fontSize: "40px" }}>
+					목표 생성하기
+				</Typography>
+			</h1>
+			<Stack
+				direction="row"
+				spacing={0.1}
+				justifyContent="center"
+				alignItems="center"
+			>
+				<ThemeProvider theme={theme}>
+					<Button
+						color="primary"
+						variant="outlined"
+						startIcon={<CreateIcon />}
+						onClick={handleManualButtonClick}
+						style={{
+							marginRight: "2%",
+							width: "49%",
+							// boxShadow: "0 2px 10px rgba(0, 0, 0, 0.3)",
+						}}
+					>
+						<Typography style={{ fontSize: "20px" }}>
+							직접 입력
+						</Typography>
+					</Button>
+					<Button
+						color="secondary"
+						variant="outlined"
+						startIcon={<SearchIcon />}
+						onClick={handleSearchButtonClick}
+						style={{
+							width: "49%",
+							// boxShadow: "0 2px 10px rgba(0, 0, 0, 0.3)",
+						}}
+					>
+						<Typography style={{ fontSize: "20px" }}>
+							검색하여 입력
+						</Typography>
+					</Button>
+				</ThemeProvider>
+			</Stack>
 
-			<div className="wrap">
-				<h1 style={{ textAlign: "center", margin: "20px 20px" }}>
-					<Typography style={{ fontSize: "40px" }}>
-						목표 생성하기
-					</Typography>
-				</h1>
-				<Stack
-					direction="row"
-					spacing={0.1}
-					justifyContent="center"
-					alignItems="center"
-				>
-					<ThemeProvider theme={theme}>
-						<Button
-							color="primary"
-							variant="outlined"
-							startIcon={<CreateIcon />}
-							onClick={handleManualButtonClick}
-							style={{
-								marginRight: "2%",
-								width: "49%",
-								// boxShadow: "0 2px 10px rgba(0, 0, 0, 0.3)",
-							}}
-						>
-							<Typography style={{ fontSize: "20px" }}>
-								직접 입력
+			{inputMode === "manual" ? (
+				<form className="create-goal" onSubmit={handleSubmit}>
+					<Grid container spacing={2}>
+						<Grid item xs={6}>
+							<TextField
+								placeholder="목표 이름"
+								inputProps={ariaLabel}
+								className="textfield1"
+								type="text"
+								value={goalName}
+								onChange={(e) => setGoalName(e.target.value)}
+								required
+							/>
+						</Grid>
+						<Grid item xs={6}>
+							<Typography
+								className="title2"
+								style={{
+									fontSize: "35px",
+									fontWeight: "normal",
+								}}
+							>
+								{" "}
+								을(를) 목표로
 							</Typography>
-						</Button>
-						<Button
-							color="secondary"
-							variant="outlined"
-							startIcon={<SearchIcon />}
-							onClick={handleSearchButtonClick}
-							style={{
-								width: "49%",
-								// boxShadow: "0 2px 10px rgba(0, 0, 0, 0.3)",
-							}}
-						>
-							<Typography style={{ fontSize: "20px" }}>
-								검색하여 입력
+						</Grid>
+						<Grid item xs={5}>
+							<TextField
+								placeholder="목표 금액"
+								inputProps={ariaLabel}
+								className="textfield2"
+								type="text"
+								value={goalAmount}
+								onChange={handleChange}
+								required
+							/>
+						</Grid>
+						<Grid item xs={7}>
+							<Typography
+								className="title2"
+								style={{
+									fontSize: "35px",
+									fontWeight: "normal",
+								}}
+							>
+								원을 모으고 싶어요!
 							</Typography>
-						</Button>
-					</ThemeProvider>
-				</Stack>
+						</Grid>
+						<Grid item xs={4} md={4}>
+							<Typography
+								className="title2"
+								style={{
+									fontSize: "35px",
+									fontWeight: "normal",
+								}}
+							>
+								목표 시작일
+							</Typography>
+						</Grid>
+						<Grid item xs={8} md={8}>
+							<LocalizationProvider
+								dateAdapter={AdapterDayjs}
+								locale="ko"
+								className="bug"
+							>
+								<DatePicker
+									value={startDate}
+									onChange={(date) => {
+										setStartDate(date);
+									}}
+									renderInput={(props) => (
+										<input {...props} />
+									)}
+									inputFormat={"yyyy-MM-dd"}
+									minDate={dayjs()}
+									responsive={true}
+									required
+								/>
+								<span
+									className="title2"
+									style={{ paddingLeft: "5px" }}
+								>
+									에요.
+								</span>
+							</LocalizationProvider>
+						</Grid>
+						<Grid
+							item
+							container
+							direction="row"
+							justifyContent="flex-start"
+							alignItems="flex-start"
+						>
+							<Typography
+								className="title2"
+								style={{
+									fontSize: "15px",
+									fontWeight: "normal",
+								}}
+							>
+								테마 색상
+							</Typography>
 
-				{inputMode === "manual" ? (
-					<form className="create-goal" onSubmit={handleSubmit}>
-						<Grid container spacing={2}>
-							<Grid item xs={6}>
+							<input
+								type="color"
+								value={goalImage}
+								onChange={handleColorChange}
+								style={{ marginLeft: "30px" }}
+								required
+							/>
+						</Grid>
+						<Button type="submit" className="submit-button">
+							<div className="submit-button-text">확인</div>
+						</Button>
+					</Grid>
+				</form>
+			) : (
+				<form className="create-goal" onSubmit={handleSubmit}>
+					<Grid container spacing={2}>
+						<Grid item xs={5}>
+							<label>
 								<TextField
-									placeholder="목표 이름"
-									inputProps={ariaLabel}
-									className="textfield1"
 									type="text"
-									value={goalName}
+									value={searchQuery}
 									onChange={(e) =>
-										setGoalName(e.target.value)
+										setSearchQuery(e.target.value)
 									}
 									required
 								/>
-							</Grid>
-							<Grid item xs={6}>
-								<Typography
-									className="title2"
-									style={{
-										fontSize: "35px",
-										fontWeight: "normal",
-									}}
+								<Button
+									type="button"
+									onClick={handleSearchSubmit}
 								>
-									{" "}
-									을(를) 목표로
-								</Typography>
-							</Grid>
-							<Grid item xs={5}>
-								<TextField
-									placeholder="목표 금액"
-									inputProps={ariaLabel}
-									className="textfield2"
-									type="text"
-									value={goalAmount}
-									onChange={handleChange}
-									required
-								/>
-							</Grid>
-							<Grid item xs={7}>
-								<Typography
-									className="title2"
-									style={{
-										fontSize: "35px",
-										fontWeight: "normal",
-									}}
-								>
-									원을 모으고 싶어요!
-								</Typography>
-							</Grid>
-							<Grid item xs={4} md={4}>
-								<Typography
-									className="title2"
-									style={{
-										fontSize: "35px",
-										fontWeight: "normal",
-									}}
-								>
-									목표 시작일
-								</Typography>
-							</Grid>
-							<Grid item xs={8} md={8}>
-							<LocalizationProvider
-			dateAdapter={AdapterDayjs}
-			locale="ko"
-			className="bug"
-		>
-									<DatePicker
-										value={startDate}
-										onChange={(date) => {
-											setStartDate(date);
-										}}
-										renderInput={(props) => (
-											<input {...props} />
-										)}
-										inputFormat={"yyyy-MM-dd"}
-										minDate={dayjs()}
-										responsive={true}
-										required
-									/>
-									<span
-										className="title2"
-										style={{ paddingLeft: "5px" }}
-									>
-										에요.
-									</span>
-								</LocalizationProvider>
-							</Grid>
-							<Grid
-								item
-								container
-								direction="row"
-								justifyContent="flex-start"
-								alignItems="flex-start"
-							>
-								<Typography
-									className="title2"
-									style={{
-										fontSize: "15px",
-										fontWeight: "normal",
-									}}
-								>
-									테마 색상
-								</Typography>
-
-								<input
-									type="color"
-									value={goalImage}
-									onChange={handleColorChange}
-									style={{ marginLeft: "30px" }}
-									required
-								/>
-							</Grid>
-							<Button type="submit" className="submit-button">
-								<div className="submit-button-text">확인</div>
-							</Button>
+									<SearchIcon />
+								</Button>
+							</label>
 						</Grid>
-					</form>
-				) : (
-					<form className="create-goal" onSubmit={handleSubmit}>
-						<Grid container spacing={2}>
-							<Grid item xs={5}>
-								<label>
-									<TextField
-										type="text"
-										value={searchQuery}
-										onChange={(e) =>
-											setSearchQuery(e.target.value)
-										}
-										required
-									/>
-									<Button
-										type="button"
-										onClick={handleSearchSubmit}
-									>
-										<SearchIcon />
-									</Button>
-								</label>
-							</Grid>
-							<Grid item xs={7}>
-								{searchResults.length > 0 && (
-									<div
-										style={{
-											...searchResultsContainerStyle,
-											display: selectedResult
-												? "none"
-												: "block",
-										}}
-									>
-										<ul>
-											{searchResults.map((result) => (
-												<li
-													key={result.productId}
-													onClick={() =>
-														handleResultSelect(
-															result
-														)
-													}
+						<Grid item xs={7}>
+							{searchResults.length > 0 && (
+								<div
+									style={{
+										...searchResultsContainerStyle,
+										display: selectedResult
+											? "none"
+											: "block",
+									}}
+								>
+									<ul>
+										{searchResults.map((result) => (
+											<li
+												key={result.productId}
+												onClick={() =>
+													handleResultSelect(result)
+												}
+											>
+												<div
+													className={`search-result ${
+														selectedResult ===
+														result
+															? "selected"
+															: ""
+													}`}
 												>
-													<div
-														className={`search-result ${
-															selectedResult ===
-															result
-																? "selected"
-																: ""
-														}`}
-													>
-														<div className="search-result-image">
-															<img
-																src={
-																	result.image
-																}
-																alt={
-																	result.title
-																}
-																style={{
-																	width: "100px",
-																	height: "80px",
-																}}
-															/>
-														</div>
-														<div className="search-result-details">
-															<p>
-																상품명:{" "}
-																{result.title}
-															</p>
-															<p>
-																가격:{" "}
-																{result.lprice}
-															</p>
-														</div>
+													<div className="search-result-image">
+														<img
+															src={result.image}
+															alt={result.title}
+															style={{
+																width: "100px",
+																height: "80px",
+															}}
+														/>
 													</div>
-												</li>
-											))}
-										</ul>
-									</div>
-								)}
-							</Grid>
-
-							<Grid item xs={6}>
-								<TextField
-									placeholder="목표 이름"
-									inputProps={ariaLabel}
-									className="textfield1"
-									type="text"
-									value={goalName}
-									onChange={(e) =>
-										setGoalName(e.target.value)
-									}
-									required
-								/>
-							</Grid>
-							<Grid item xs={6}>
-								<Typography
-									className="title2"
-									style={{
-										fontSize: "35px",
-										fontWeight: "normal",
-									}}
-								>
-									{" "}
-									을(를) 목표로
-								</Typography>
-							</Grid>
-							<Grid item xs={5}>
-								<TextField
-									placeholder="목표 금액"
-									inputProps={ariaLabel}
-									className="textfield2"
-									type="text"
-									value={goalAmount}
-									onChange={handleChange}
-									required
-								/>
-							</Grid>
-							<Grid item xs={7}>
-								<Typography
-									className="title2"
-									style={{
-										fontSize: "35px",
-										fontWeight: "normal",
-									}}
-								>
-									원을 모으고 싶어요!
-								</Typography>
-							</Grid>
-							<Grid item xs={4} md={4}>
-								<Typography
-									className="title2"
-									style={{
-										fontSize: "35px",
-										fontWeight: "normal",
-									}}
-								>
-									목표 시작일
-								</Typography>
-							</Grid>
-							<Grid item xs={8} md={8}>
-							<LocalizationProvider
-			dateAdapter={AdapterDayjs}
-			locale="ko"
-			className="bug"
-		>
-									<DatePicker
-										value={startDate}
-										onChange={(date) => {
-											setStartDate(date);
-										}}
-										renderInput={(props) => (
-											<input {...props} />
-										)}
-										inputFormat={"yyyy-MM-dd"}
-										minDate={dayjs()}
-										responsive={true}
-										required
-									/>
-									<span
-										className="title2"
-										style={{ paddingLeft: "5px" }}
-									>
-										에요.
-									</span>
-								</LocalizationProvider>
-							</Grid>
-							<Grid
-								item
-								container
-								direction="row"
-								justifyContent="flex-start"
-								alignItems="flex-start"
-							>
-								<Typography
-									className="title2"
-									style={{
-										fontSize: "15px",
-										fontWeight: "normal",
-									}}
-								>
-									테마 색상
-								</Typography>
-
-								<input
-									type="color"
-									value={goalImage}
-									onChange={handleColorChange}
-									style={{ marginLeft: "30px" }}
-									required
-								/>
-							</Grid>
-							<Button type="submit" className="submit-button">
-								<div className="submit-button-text">확인</div>
-							</Button>
+													<div className="search-result-details">
+														<p>
+															상품명:{" "}
+															{result.title}
+														</p>
+														<p>
+															가격:{" "}
+															{result.lprice}
+														</p>
+													</div>
+												</div>
+											</li>
+										))}
+									</ul>
+								</div>
+							)}
 						</Grid>
-					</form>
-				)}
-			</div>
+
+						<Grid item xs={6}>
+							<TextField
+								placeholder="목표 이름"
+								inputProps={ariaLabel}
+								className="textfield1"
+								type="text"
+								value={goalName}
+								onChange={(e) => setGoalName(e.target.value)}
+								required
+							/>
+						</Grid>
+						<Grid item xs={6}>
+							<Typography
+								className="title2"
+								style={{
+									fontSize: "35px",
+									fontWeight: "normal",
+								}}
+							>
+								{" "}
+								을(를) 목표로
+							</Typography>
+						</Grid>
+						<Grid item xs={5}>
+							<TextField
+								placeholder="목표 금액"
+								inputProps={ariaLabel}
+								className="textfield2"
+								type="text"
+								value={goalAmount}
+								onChange={handleChange}
+								required
+							/>
+						</Grid>
+						<Grid item xs={7}>
+							<Typography
+								className="title2"
+								style={{
+									fontSize: "35px",
+									fontWeight: "normal",
+								}}
+							>
+								원을 모으고 싶어요!
+							</Typography>
+						</Grid>
+						<Grid item xs={4} md={4}>
+							<Typography
+								className="title2"
+								style={{
+									fontSize: "35px",
+									fontWeight: "normal",
+								}}
+							>
+								목표 시작일
+							</Typography>
+						</Grid>
+						<Grid item xs={8} md={8}>
+							<LocalizationProvider
+								dateAdapter={AdapterDayjs}
+								locale="ko"
+								className="bug"
+							>
+								<DatePicker
+									value={startDate}
+									onChange={(date) => {
+										setStartDate(date);
+									}}
+									renderInput={(props) => (
+										<input {...props} />
+									)}
+									inputFormat={"yyyy-MM-dd"}
+									minDate={dayjs()}
+									responsive={true}
+									required
+								/>
+								<span
+									className="title2"
+									style={{ paddingLeft: "5px" }}
+								>
+									에요.
+								</span>
+							</LocalizationProvider>
+						</Grid>
+						<Grid
+							item
+							container
+							direction="row"
+							justifyContent="flex-start"
+							alignItems="flex-start"
+						>
+							<Typography
+								className="title2"
+								style={{
+									fontSize: "15px",
+									fontWeight: "normal",
+								}}
+							>
+								테마 색상
+							</Typography>
+
+							<input
+								type="color"
+								value={goalImage}
+								onChange={handleColorChange}
+								style={{ marginLeft: "30px" }}
+								required
+							/>
+						</Grid>
+						<Button type="submit" className="submit-button">
+							<div className="submit-button-text">확인</div>
+						</Button>
+					</Grid>
+				</form>
+			)}
+		</div>
 	);
 }
 
