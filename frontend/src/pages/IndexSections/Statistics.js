@@ -114,7 +114,7 @@ export default function Statistics() {
 							className="text-white"
 							style={{ textAlign: "center" }}
 						>
-							"{bfr}을 가진 사람들은 '{bestJob}' 인 사람이 많네요!
+							"{bfr}을 가진 사람들은 '{bestJob}' 인 사람이 많네요!"
 						</h4>
 					)}
 				</Grid>
@@ -168,7 +168,7 @@ export default function Statistics() {
 							style={{ textAlign: "center" }}
 						>
 							"{bfr}을 가진 사람들은 '{bestGenderAgeMessage}'인 사람이
-							많네요!
+							많네요!"
 						</h4>
 				</Grid>
 			</Grid>
