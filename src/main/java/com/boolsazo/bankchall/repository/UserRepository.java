@@ -49,7 +49,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
                        + "where u.financial_type = (select financial_type from user u where u.user_id = :userId)\n"
                        + "and u.age = :age\n"
                        + "group by u.gender", nativeQuery = true)
-    GenderAgeResultSet genderAgeStatistics(@PathVariable("userId") int userId,
+    List<GenderAgeResultSet> genderAgeStatistics(@PathVariable("userId") int userId,
         @PathVariable("age") String age);
 
     @Query(value = "select occupation, count(*) count from user u\n"
