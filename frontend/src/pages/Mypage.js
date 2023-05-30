@@ -149,11 +149,8 @@ const Profile = () => {
                     <span className="description" style={{ fontSize: "20px" }}>목표 달성률</span>
                   </div>
                   <div>
-                    <span className="heading">
-                      {numberWithCommas(sessionStorage.getItem("savingAmount"))}원
-                    </span>
                     <span className="heading" style={{ fontSize: "40px" }}>
-                      {sessionStorage.getItem("savingAmount")}
+                      {numberWithCommas(sessionStorage.getItem("savingAmount"))}원
                     </span>
                     <span className="description" style={{ fontSize: "20px" }}>현재까지 모은 금액</span>
                   </div>
