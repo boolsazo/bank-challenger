@@ -42,14 +42,18 @@ public class StatisticsServiceImpl implements StatisticsService {
         for (int i = 0; i < ageStrArr.length; i++) {
             String age = ageArr[i];
             String ageStr = ageStrArr[i];
+
             StatisticsGenderAgeResponse.GenderAge genderAge = new StatisticsGenderAgeResponse.GenderAge();
-            GenderAgeResultSet result = userRepository.genderAgeStatistics(userId, age);
+            List<GenderAgeResultSet> result = userRepository.genderAgeStatistics(userId, age);
             genderAge.setAge(ageStr);
+
             if (result != null) {
-                if (result.getGender().equals("M")) {
-                    genderAge.setMan(result.getCount());
-                } else {
-                    genderAge.setWoman(result.getCount());
+                for (GenderAgeResultSet genderAgeResultSet : result) {
+                    if (genderAgeResultSet.getGender().equals("M")) {
+                        genderAge.setMan(genderAgeResultSet.getCount());
+                    } else {
+                        genderAge.setWoman(genderAgeResultSet.getCount());
+                    }
                 }
             }
             response.add(genderAge);

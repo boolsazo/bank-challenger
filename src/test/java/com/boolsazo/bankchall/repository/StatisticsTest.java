@@ -36,10 +36,10 @@ public class StatisticsTest {
         String[] ageArr = {"0-9", "10-19", "20-29", "30-39", "40-49", "50-59", "60-"};
 
         for (String age : ageArr) {
-            GenderAgeResultSet result = userRepository.genderAgeStatistics(1, age);
+            List<GenderAgeResultSet> result = userRepository.genderAgeStatistics(1, age);
             if (result != null) {
-                System.out.println("성별: " + result.getGender());
-                System.out.println("개수: " + result.getCount());
+                System.out.println("성별: " + result.get(0).getGender());
+                System.out.println("개수: " + result.get(0).getCount());
             }
         }
     }

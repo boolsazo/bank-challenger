@@ -51,9 +51,11 @@ public class StatisticsGenderAgeResponse {
                 if (max < genderAge.getMan()) {
                     bestAge = genderAge.getAge();
                     bestGender = "남자";
+                    max = genderAge.getMan();
                 } else if (max < genderAge.getWoman()) {
                     bestAge = genderAge.getAge();
                     bestGender = "여자";
+                    max = genderAge.getWoman();
                 }
             }
             this.bestGenderAge = bestAge + " " + bestGender;

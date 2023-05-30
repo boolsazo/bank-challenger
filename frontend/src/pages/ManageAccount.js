@@ -1,16 +1,10 @@
 import { React, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import {
-  Button,
-  Card,
-  CardHeader,
-  CardBody,
-  Container,
-} from "reactstrap";
+import { Button, Card, CardHeader, CardBody, Container } from "reactstrap";
 import DemoNavbar from "components/Navbars/DemoNavbar.js";
 import SimpleFooter from "components/Footers/SimpleFooter.js";
-import bankLogo from "components/Banks/BankLogo"
+import bankLogo from "components/Banks/BankLogo";
 
 function ManageAccount() {
   useEffect(() => {
@@ -215,9 +209,7 @@ function ManageAccount() {
                 <table style={{ marginRight: "auto" }}>
                   <tr>
                     <th rowSpan="2">
-                      <span>
-                        {bankLogo(it.bankName)}
-                      </span>
+                      <span>{bankLogo(it.bankName)}</span>
                     </th>
                     <th
                       style={{
@@ -291,9 +283,7 @@ function ManageAccount() {
                 <table style={{ marginRight: "auto" }}>
                   <tr>
                     <th rowSpan="2">
-                      <span>
-                      {bankLogo(it.bankName)}
-                      </span>
+                      <span>{bankLogo(it.bankName)}</span>
                     </th>
                     <th
                       style={{
@@ -335,16 +325,16 @@ function ManageAccount() {
       <main id="main">
         <section className="section section-hero section-shaped">
           <div className="shape shape-style-1">
-          <img
-                alt="..."
-                src={require("assets/img/theme/background.png")}
-                style={{
-                  width: "100%",
-                  height: "1200px",
-                  maxWidth: "2000px",
-                  margin: "0 auto",
-                }}
-              />
+            <img
+              alt="..."
+              src={require("assets/img/theme/background.png")}
+              style={{
+                width: "100%",
+                height: "1200px",
+                maxWidth: "2000px",
+                margin: "0 auto",
+              }}
+            />
           </div>
           <Container
             style={{
@@ -383,7 +373,7 @@ function ManageAccount() {
                   style={{ fontSize: "20px", margin: "-20px" }}
                   className="text-danger ml-1 btn btn-link"
                 >
-                  {userName} 님이 Bank Challneger에 등록한 계좌들이에요!
+                  {userName}님이 Bank Challneger에 등록한 계좌들이에요!
                 </div>
               </CardHeader>
               <CardBody className="px-lg-5 py-lg-5">
